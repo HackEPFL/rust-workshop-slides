@@ -139,6 +139,59 @@ Being an owner affords you some privileges:
 * You may lend that resource, **immutably**, to **as many** borrowers as you'd like.
 * You may lend that resource, **mutably**, to a **single** borrower.
 
+# Ownership & Borrowing - Copy
+
+```rust
+fn main() {
+    let a = 5;
+    let b = add_one(a);
+    println!("{}", a);
+}
+
+fn add_one(x: int) -> int {
+    x + 1
+}
+```
+
+# Moving
+
+```rust
+struct Person {
+    name: String,
+    age: uint
+}
+
+fn main() {
+    let p = Person { name: "John".to_string(), age: 42 };
+    show(p);
+    show(p);
+}
+
+fn show(p: Person) {
+    println!("{} is {}", p.name, p.age);
+}
+```
+
+# Borrow
+
+```rust
+struct Person {
+    name: String,
+    age: uint
+}
+
+fn main() {
+    let p = Person { name: "John".to_string(), age: 42 };
+    show(&p);
+    show(&p);
+}
+
+fn show(p: &Person) {
+    println!("{} is {}", p.name, p.age);
+}
+```
+
+
 # Ownership & Borrowing
 
 But it also comes with some restrictions:
