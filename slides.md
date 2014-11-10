@@ -105,8 +105,6 @@ Time span during which a resource (value) is valid.
 
 # Lifetime
 
-In C you would write:
-
 ```c
 {
     int *x = malloc(sizeof(int));
@@ -118,8 +116,6 @@ In C you would write:
 ```
 
 # Lifetime
-
-In Rust, this amounts to:
 
 ```rust
 {
@@ -139,7 +135,7 @@ Being an owner affords you some privileges:
 * You may lend that resource, **immutably**, to **as many** borrowers as you'd like.
 * You may lend that resource, **mutably**, to a **single** borrower.
 
-# Ownership & Borrowing - Copy
+# Copy
 
 ```rust
 fn main() {
@@ -153,7 +149,7 @@ fn add_one(x: int) -> int {
 }
 ```
 
-# Moving
+# Move
 
 ```rust
 struct Person {
@@ -169,6 +165,41 @@ fn main() {
 
 fn show(p: Person) {
     println!("{} is {}", p.name, p.age);
+    
+    // `p` will be deallocated here
+}
+```
+
+# Move
+
+```norust
+error: use of moved value: `p`
+     show(p);
+          ^
+note: `p` moved here because it has type `Person`, which is non-copyable
+     show(p);
+          ^
+error: aborting due to previous error
+```
+
+# Move
+
+```rust
+struct Person {
+    name: String,
+    age: uint
+}
+
+fn main() {
+    let p = Person { name: "John".to_string(), age: 42 };
+    show(p);
+    show(p); // error
+}
+
+fn show(p: Person) {
+    println!("{} is {}", p.name, p.age);
+    
+    // `p` will be deallocated here
 }
 ```
 
@@ -190,6 +221,19 @@ fn show(p: &Person) {
     println!("{} is {}", p.name, p.age);
 }
 ```
+
+# Borrow
+
+```norust
+John is 42
+John is 42
+```
+
+# Multiple borrowers
+
+> You may lend that resource, immutably, to as many borrowers as you'd like.
+
+
 
 
 # Ownership & Borrowing

@@ -147,8 +147,6 @@
 
 <h1 id="lifetime-2" class='section-header'><a
                            href="#lifetime-2">Lifetime</a></h1>
-<p>In C you would write:</p>
-
 <pre><code class="language-c">{
     int *x = malloc(sizeof(int));
 
@@ -159,9 +157,7 @@
 </code></pre>
 
 <h1 id="lifetime-3" class='section-header'><a
-                           href="#lifetime-3">Lifetime</a></h1>
-<p>In Rust, this amounts to:</p>
-<pre class='rust '>
+                           href="#lifetime-3">Lifetime</a></h1><pre class='rust '>
 {
     <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='kw'>box</span> <span class='number'>5i</span>;
     
@@ -181,8 +177,8 @@
 <li>You may lend that resource, <strong>mutably</strong>, to a <strong>single</strong> borrower.</li>
 </ul>
 
-<h1 id="ownership-&amp;-borrowing---copy" class='section-header'><a
-                           href="#ownership-&amp;-borrowing---copy">Ownership &amp; Borrowing - Copy</a></h1><pre class='rust '>
+<h1 id="copy" class='section-header'><a
+                           href="#copy">Copy</a></h1><pre class='rust '>
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
     <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='number'>5</span>;
     <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>add_one</span>(<span class='ident'>a</span>);
@@ -194,8 +190,8 @@
 }
 </pre>
 
-<h1 id="moving" class='section-header'><a
-                           href="#moving">Moving</a></h1><pre class='rust '>
+<h1 id="move" class='section-header'><a
+                           href="#move">Move</a></h1><pre class='rust '>
 <span class='kw'>struct</span> <span class='ident'>Person</span> {
     <span class='ident'>name</span>: <span class='ident'>String</span>,
     <span class='ident'>age</span>: <span class='ident'>uint</span>
@@ -209,6 +205,39 @@
 
 <span class='kw'>fn</span> <span class='ident'>show</span>(<span class='ident'>p</span>: <span class='ident'>Person</span>) {
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>p</span>.<span class='ident'>name</span>, <span class='ident'>p</span>.<span class='ident'>age</span>);
+    
+    <span class='comment'>// `p` will be deallocated here</span>
+}
+</pre>
+
+<h1 id="move-1" class='section-header'><a
+                           href="#move-1">Move</a></h1>
+<pre><code class="language-norust">error: use of moved value: `p`
+     show(p);
+          ^
+note: `p` moved here because it has type `Person`, which is non-copyable
+     show(p);
+          ^
+error: aborting due to previous error
+</code></pre>
+
+<h1 id="move-2" class='section-header'><a
+                           href="#move-2">Move</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Person</span> {
+    <span class='ident'>name</span>: <span class='ident'>String</span>,
+    <span class='ident'>age</span>: <span class='ident'>uint</span>
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
+    <span class='ident'>show</span>(<span class='ident'>p</span>);
+    <span class='ident'>show</span>(<span class='ident'>p</span>); <span class='comment'>// error</span>
+}
+
+<span class='kw'>fn</span> <span class='ident'>show</span>(<span class='ident'>p</span>: <span class='ident'>Person</span>) {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>p</span>.<span class='ident'>name</span>, <span class='ident'>p</span>.<span class='ident'>age</span>);
+    
+    <span class='comment'>// `p` will be deallocated here</span>
 }
 </pre>
 
@@ -229,6 +258,18 @@
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>p</span>.<span class='ident'>name</span>, <span class='ident'>p</span>.<span class='ident'>age</span>);
 }
 </pre>
+
+<h1 id="borrow-1" class='section-header'><a
+                           href="#borrow-1">Borrow</a></h1>
+<pre><code class="language-norust">John is 42
+John is 42
+</code></pre>
+
+<h1 id="multiple-borrowers" class='section-header'><a
+                           href="#multiple-borrowers">Multiple borrowers</a></h1>
+<blockquote>
+<p>You may lend that resource, immutably, to as many borrowers as you&#39;d like.</p>
+</blockquote>
 
 <h1 id="ownership-&amp;-borrowing-1" class='section-header'><a
                            href="#ownership-&amp;-borrowing-1">Ownership &amp; Borrowing</a></h1>
