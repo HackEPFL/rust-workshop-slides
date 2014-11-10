@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="generator" content="rustdoc">
+    <title>Rust Workshop</title>
+
+    
+    <link rel="stylesheet" href="http://doc.rust-lang.org/rust.css">
+<link rel="stylesheet" href="sliderust.css">
+<script src="sliderust.js"></script>
+
+
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+    <h1 class="title">Rust Workshop</h1>
+    <p>HackEPFL</p>
+
+<p>Dimiter Petrov &amp; Romain Ruetschi</p>
+
+<p>November 12, 2014</p>
+
+<h1 id="hello,-rust" class='section-header'><a
+                           href="#hello,-rust">Hello, Rust</a></h1><pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Hello, world!&quot;</span>);
+}
+</pre>
+<pre class='rust '>
+<span class='op'>&gt;</span> <span class='ident'>Hello</span>, <span class='macro'>world</span><span class='macro'>!</span>
+</pre>
+
+<h1 id="history" class='section-header'><a
+                           href="#history">History</a></h1>
+<ul>
+<li>Started as a personal project in 2006 by Graydon Hoare</li>
+<li>First compiler written in OCaml</li>
+<li>Mozilla took over the project 3 years later</li>
+<li>Compiler rewritten in Rust itself in 2010</li>
+</ul>
+
+<h1 id="why-rust-at-mozilla?" class='section-header'><a
+                           href="#why-rust-at-mozilla?">Why Rust at Mozilla?</a></h1>
+<ul>
+<li>New experimental, highly parallel browser engine: Servo</li>
+<li>Browsers evolve in a hostile, highly concurrent environment</li>
+<li>Most security problems arise from memory safetey and concurrency issues</li>
+<li>Thus needed a safer, saner systems language, with built-in concurrency</li>
+</ul>
+
+<h1 id="why-rust,-for-you?" class='section-header'><a
+                           href="#why-rust,-for-you?">Why Rust, for you?</a></h1>
+<ul>
+<li>High-level features</li>
+<li>Low-level control</li>
+<li>Powerful Foreign Function Interface</li>
+<li>Direct memory control</li>
+<li>Guaranteed memory safety</li>
+<li>Concurrency without data races</li>
+<li>Zero cost abstractions</li>
+</ul>
+
+<h1 id="high-level-features" class='section-header'><a
+                           href="#high-level-features">High-level features</a></h1>
+<ul>
+<li>Algebraic data types</li>
+<li>Pattern matching</li>
+<li>Higher-order functions</li>
+<li>Closures</li>
+<li>Traits (= type classes)</li>
+<li>Type inference</li>
+</ul>
+
+<h1 id="low-level-control" class='section-header'><a
+                           href="#low-level-control">Low-level control</a></h1>
+<ul>
+<li>Ability to trade compiler-enforced safety for lower-level control</li>
+<li>Eg. dereferencing raw pointer, pointer arithmetic, calling extern code</li>
+<li>Such unsafe code must be surrounded by an <code>unsafe</code> block</li>
+<li>Thus easy to spot during code review or when debugging</li>
+</ul>
+
+<h1 id="powerful-ffi" class='section-header'><a
+                           href="#powerful-ffi">Powerful FFI</a></h1>
+<ul>
+<li>Call Rust code from other languages (C, C++, or even GCed languages like Ruby)</li>
+<li>Create bindings for libraries exposing a C interface</li>
+</ul>
+
+<h1 id="direct-memory-control" class='section-header'><a
+                           href="#direct-memory-control">Direct memory control</a></h1>
+<ul>
+<li>No garbage collector</li>
+<li>No runtime overhead</li>
+<li>No unpredictable pauses in execution</li>
+<li>TODO: Stack VS Heap</li>
+</ul>
+
+<h1 id="guaranteed-memory-safety" class='section-header'><a
+                           href="#guaranteed-memory-safety">Guaranteed memory safety</a></h1>
+<ul>
+<li>No buffer overflows</li>
+<li>No dangling pointers</li>
+</ul>
+
+<h1 id="concurrency-without-data-races" class='section-header'><a
+                           href="#concurrency-without-data-races">Concurrency without data races</a></h1>
+<ul>
+<li>Only immutable data can be shared</li>
+<li>Shared data must remain live as long as any task might access it</li>
+</ul>
+
+<h1 id="zero-cost-abstractions" class='section-header'><a
+                           href="#zero-cost-abstractions">Zero cost abstractions</a></h1>
+<p>Memory safety is enforced during compilation, there is no runtime overhead.</p>
+
+<h1 id="but-how?" class='section-header'><a
+                           href="#but-how?">But how?</a></h1>
+<p>Rust is built around 3 concepts:</p>
+
+<ul>
+<li>Lifetime</li>
+<li>Ownership</li>
+<li>Borrowing</li>
+</ul>
+
+<h1 id="lifetime" class='section-header'><a
+                           href="#lifetime">Lifetime</a></h1>
+<p>Time span during which a resource (value) is valid.</p>
+
+<h1 id="lifetime-1" class='section-header'><a
+                           href="#lifetime-1">Lifetime</a></h1>
+<p><img src="http://cl.ly/image/343C1X3o3K1s/Screen%20Shot%202014-11-10%20at%2018.06.58.png" alt=""></p>
+
+<ul>
+<li>You can think of it as a scope.</li>
+<li>At the end of its lifetime, a value will be deallocated.</li>
+</ul>
+
+<h1 id="lifetime-2" class='section-header'><a
+                           href="#lifetime-2">Lifetime</a></h1>
+<p>In C you would write:</p>
+
+<pre><code class="language-c">{
+    int *x = malloc(sizeof(int));
+
+    *x = 5;
+
+    free(x);
+}
+</code></pre>
+
+<h1 id="lifetime-3" class='section-header'><a
+                           href="#lifetime-3">Lifetime</a></h1>
+<p>In Rust, this amounts to:</p>
+<pre class='rust '>
+{
+    <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='kw'>box</span> <span class='number'>5i</span>;
+    
+    <span class='comment'>// x gets deallocated here</span>
+}
+</pre>
+
+<h1 id="ownership-&amp;-borrowing" class='section-header'><a
+                           href="#ownership-&amp;-borrowing">Ownership &amp; Borrowing</a></h1>
+<p>When you create a resource, you&#39;re the <strong>owner</strong> of that resource.</p>
+
+<p>Being an owner affords you some privileges:</p>
+
+<ul>
+<li>You control when that resource is deallocated.</li>
+<li>You may lend that resource, <strong>immutably</strong>, to <strong>as many</strong> borrowers as you&#39;d like.</li>
+<li>You may lend that resource, <strong>mutably</strong>, to a <strong>single</strong> borrower.</li>
+</ul>
+
+<h1 id="ownership-&amp;-borrowing-1" class='section-header'><a
+                           href="#ownership-&amp;-borrowing-1">Ownership &amp; Borrowing</a></h1>
+<p>But it also comes with some restrictions:</p>
+
+<ul>
+<li>If someone is borrowing your resource (either mutably or immutably), you may not mutate the resource or mutably lend it to someone.</li>
+<li>If someone is mutably borrowing your resource, you may not lend it out at all (mutably or immutably) or access it in any way.</li>
+</ul>
+
+<h1 id="borrowing" class='section-header'><a
+                           href="#borrowing">Borrowing</a></h1>
+<h1 id="net-result" class='section-header'><a
+                           href="#net-result">Net result</a></h1>
+<ul>
+<li>You never have to malloc or free </li>
+<li>You never have to retain or release </li>
+<li>Rust will deallocate a value when the current owner is done with it </li>
+<li>The compiler will guarantee that borrowed values are not stolen</li>
+</ul>
+
+<h1 id="net-result-1" class='section-header'><a
+                           href="#net-result-1">Net result</a></h1>
+<ul>
+<li>In low-level languages, we allocate and free memory, close sockets, etc.</li>
+<li>In high-level languages, we never free memory, but we routinely close sockets and files, and release locks.</li>
+<li>In Rust we do neither :)</li>
+</ul>
+
+<h1 id="thank-you!" class='section-header'><a
+                           href="#thank-you!">Thank you!</a></h1>
+<p>Questions?</p>
+
+<h1 id="references" class='section-header'><a
+                           href="#references">References</a></h1>
+<ul>
+<li><a href="http://doc.rust-lang.org/reference.html">http://doc.rust-lang.org/reference.html</a></li>
+<li><a href="http://www.slideshare.net/saneyuki/rusts-ownership-and-move-semantics">http://www.slideshare.net/saneyuki/rusts-ownership-and-move-semantics</a></li>
+<li><a href="http://www.infoq.com/news/2012/08/Interview-Rust">http://www.infoq.com/news/2012/08/Interview-Rust</a></li>
+<li><a href="http://theincredibleholk.wordpress.com/2012/05/30/safe-parallelism-in-rust/">http://theincredibleholk.wordpress.com/2012/05/30/safe-parallelism-in-rust/</a></li>
+<li><a href="http://blog.skylight.io/rust-means-never-having-to-close-a-socket/">http://blog.skylight.io/rust-means-never-having-to-close-a-socket/</a></li>
+<li><a href="https://s3.amazonaws.com/f.cl.ly/items/351X3I3z0M1E251x3V1p/Hello%20Rust.pdf">https://s3.amazonaws.com/f.cl.ly/items/351X3I3z0M1E251x3V1p/Hello%20Rust.pdf</a></li>
+<li><a href="http://lea-linux.org/documentations/Rust">http://lea-linux.org/documentations/Rust</a></li>
+</ul>
+
+    <script type="text/javascript">
+        window.playgroundUrl = "";
+    </script>
+    
+</body>
+</html>
