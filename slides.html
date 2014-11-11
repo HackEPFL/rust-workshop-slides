@@ -233,26 +233,20 @@
                            href="#mutability">Mutability</a></h1><pre class='rust '>
 <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
 
-<span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>x</span> <span class='op'>+</span> <span class='number'>1</span>;      <span class='comment'>// error</span>
+<span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>x</span> <span class='op'>+</span> <span class='number'>1</span>; <span class='comment'>// error</span>
 </pre>
 
 <h1 id="mutability-1" class='section-header'><a
                            href="#mutability-1">Mutability</a></h1><pre class='rust '>
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
 
-<span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>x</span> <span class='op'>+</span> <span class='number'>1</span>;      <span class='comment'>// ok</span>
+<span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>x</span> <span class='op'>+</span> <span class='number'>1</span>; <span class='comment'>// ok</span>
 </pre>
 
 <h1 id="mutability-2" class='section-header'><a
                            href="#mutability-2">Mutability</a></h1><pre class='rust '>
-<span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
-<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='ident'>x</span>;  <span class='comment'>// error</span>
-</pre>
-
-<h1 id="mutability-3" class='section-header'><a
-                           href="#mutability-3">Mutability</a></h1><pre class='rust '>
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
-<span class='kw'>let</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='ident'>x</span>;      <span class='comment'>// ok</span>
+<span class='kw'>let</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='ident'>x</span>; <span class='comment'>// ok</span>
 </pre>
 
 <h1 id="functions" class='section-header'><a
@@ -264,13 +258,28 @@
 
 <span class='kw'>fn</span> <span class='ident'>do_stuff</span>(<span class='ident'>a</span>: <span class='ident'>int</span>, <span class='ident'>b</span>: <span class='ident'>int</span>) <span class='op'>-&gt;</span> <span class='ident'>int</span> {
     <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>b</span>;
-    <span class='kw'>let</span> <span class='ident'>d</span> <span class='op'>=</span> <span class='ident'>c</span> <span class='op'>*</span> <span class='number'>2</span>;
-    
-    <span class='ident'>d</span>
+
+    <span class='kw'>return</span> <span class='ident'>c</span> <span class='op'>*</span> <span class='number'>2</span>;
 }
 </pre>
 
-<p>Must omit last semicolon (TODO: explain semantics)</p>
+<h1 id="functions-1" class='section-header'><a
+                           href="#functions-1">Functions</a></h1>
+<p>You can omit <code>return</code> if you want return the last expression.</p>
+<pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>do_stuff</span>(<span class='number'>2</span>, <span class='number'>3</span>);
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;result is {}&quot;</span>, <span class='ident'>res</span>);
+}
+
+<span class='kw'>fn</span> <span class='ident'>do_stuff</span>(<span class='ident'>a</span>: <span class='ident'>int</span>, <span class='ident'>b</span>: <span class='ident'>int</span>) <span class='op'>-&gt;</span> <span class='ident'>int</span> {
+    <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>b</span>;
+
+    <span class='ident'>c</span> <span class='op'>*</span> <span class='number'>2</span> <span class='comment'>// ! no semicolon</span>
+}
+</pre>
+
+<p>But you also need to omit the last semicolon, otherwise the function will return <code>()</code>.</p>
 
 <h1 id="printing-stuff" class='section-header'><a
                            href="#printing-stuff">Printing stuff</a></h1><pre class='rust '>
@@ -306,22 +315,24 @@
                            href="#conditionals-1">Conditionals</a></h1>
 <p><code>if/else</code> is an expression:</p>
 <pre class='rust '>
-<span class='kw'>let</span> <span class='ident'>score</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>dead</span> {
+<span class='kw'>let</span> <span class='ident'>score</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>down</span> {
     <span class='number'>0</span>
 } <span class='kw'>else</span> {
     <span class='ident'>score</span> <span class='op'>+</span> <span class='number'>1</span>
 };
+
+<span class='kw'>let</span> <span class='ident'>score</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>down</span> { <span class='number'>0</span> } <span class='kw'>else</span> { <span class='ident'>score</span> <span class='op'>+</span> <span class='number'>1</span> };
 </pre>
 
-<h1 id="looping" class='section-header'><a
-                           href="#looping">Looping</a></h1><pre class='rust '>
+<h1 id="while" class='section-header'><a
+                           href="#while">While</a></h1><pre class='rust '>
 <span class='kw'>while</span> <span class='ident'>x</span> <span class='op'>&lt;</span> <span class='number'>10</span> {
     <span class='comment'>// do stuff</span>
 }
 </pre>
 
-<h1 id="looping-1" class='section-header'><a
-                           href="#looping-1">Looping</a></h1>
+<h1 id="loop" class='section-header'><a
+                           href="#loop">Loop</a></h1>
 <p>Instead of</p>
 <pre class='rust '>
 <span class='kw'>while</span> <span class='boolval'>true</span> {
@@ -338,21 +349,21 @@
 
 <p>Rust&#39;s control-flow analysis treats this construct differently than a <code>while true</code>, which leads to better generated code.</p>
 
-<h1 id="looping-2" class='section-header'><a
-                           href="#looping-2">Looping</a></h1><pre class='rust '>
+<h1 id="for" class='section-header'><a
+                           href="#for">For</a></h1><pre class='rust '>
 <span class='kw'>for</span> <span class='ident'>x</span> <span class='kw'>in</span> <span class='ident'>range</span>(<span class='number'>0i</span>, <span class='number'>10i</span>) {
     <span class='comment'>// do stuff</span>
 }
 </pre>
 
-<h1 id="looping-3" class='section-header'><a
-                           href="#looping-3">Looping</a></h1><pre class='rust '>
+<h1 id="for-1" class='section-header'><a
+                           href="#for-1">For</a></h1><pre class='rust '>
 <span class='kw'>for</span> <span class='ident'>var</span> <span class='kw'>in</span> <span class='ident'>expression</span> {
     <span class='ident'>code</span>
 }
 </pre>
 
-<p><code>expression</code> must be an iterator (we&#39;ll talk about it later).</p>
+<p><code>expression</code> must be an <code>Iterator</code> (we&#39;ll talk about it later).</p>
 
 <h1 id="strings" class='section-header'><a
                            href="#strings">Strings</a></h1>
@@ -407,12 +418,25 @@
 }
 </pre>
 
+<h1 id="static-methods" class='section-header'><a
+                           href="#static-methods">Static methods</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span> }
+
+<span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
+    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Rectangle</span> {
+        <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>width</span>, <span class='ident'>height</span>: <span class='ident'>height</span> }
+    }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span>::<span class='ident'>new</span>(<span class='number'>1.2</span>, <span class='number'>4.9</span>);
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>react</span>.<span class='ident'>area</span>());
+}
+</pre>
+
 <h1 id="member-methods" class='section-header'><a
                            href="#member-methods">Member methods</a></h1><pre class='rust '>
-<span class='kw'>struct</span> <span class='ident'>Rectangle</span> {
-    <span class='ident'>width</span>: <span class='ident'>f32</span>,
-    <span class='ident'>height</span>: <span class='ident'>f32</span>
-}
+<span class='kw'>struct</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span> }
 
 <span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
     <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
@@ -429,22 +453,73 @@
 }
 </pre>
 
-<h1 id="static-methods" class='section-header'><a
-                           href="#static-methods">Static methods</a></h1><pre class='rust '>
-<span class='kw'>struct</span> <span class='ident'>Rectangle</span> {
-    <span class='ident'>width</span>: <span class='ident'>f32</span>,
-    <span class='ident'>height</span>: <span class='ident'>f32</span>
+<h1 id="traits" class='section-header'><a
+                           href="#traits">Traits</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span> }
+
+<span class='kw'>trait</span> <span class='ident'>HasArea</span> {
+    <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span>;
 }
 
-<span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
-    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Rectangle</span> {
-        <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>width</span>, <span class='ident'>height</span>: <span class='ident'>height</span> }
+<span class='kw'>impl</span> <span class='ident'>HasArea</span> <span class='kw'>for</span> <span class='ident'>Rectangle</span> {
+    <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='self'>self</span>.<span class='ident'>width</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>height</span>
     }
+}
+</pre>
+
+<h1 id="traits-1" class='section-header'><a
+                           href="#traits-1">Traits</a></h1><pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span> {
+        <span class='ident'>width</span>: <span class='number'>1.2</span>,
+        <span class='ident'>height</span>: <span class='number'>4.9</span>
+    };
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>react</span>.<span class='ident'>area</span>());
+}
+</pre>
+
+<h1 id="traits-2" class='section-header'><a
+                           href="#traits-2">Traits</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Circle</span> { <span class='ident'>radius</span>: <span class='ident'>f32</span> }
+
+<span class='kw'>impl</span> <span class='ident'>HasArea</span> <span class='kw'>for</span> <span class='ident'>Circle</span> {
+    <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+         <span class='ident'>std</span>::<span class='ident'>f32</span>::<span class='ident'>consts</span>::<span class='ident'>PI</span> <span class='op'>*</span> (<span class='self'>self</span>.<span class='ident'>radius</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>radius</span>)
+    }
+}
+</pre>
+
+<h1 id="traits-3" class='section-header'><a
+                           href="#traits-3">Traits</a></h1><pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>print_area</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>T</span>) {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;This shape has an area of {}&quot;</span>, <span class='ident'>shape</span>.<span class='ident'>area</span>());
+}
+</pre>
+
+<blockquote>
+<p>error: type <code>T</code> does not implement any method in scope named <code>area</code></p>
+</blockquote>
+
+<h1 id="traits-4" class='section-header'><a
+                           href="#traits-4">Traits</a></h1><pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>print_area</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>HasArea</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>T</span>) {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;This shape has an area of {}&quot;</span>, <span class='ident'>shape</span>.<span class='ident'>area</span>());
+}
+</pre>
+
+<h1 id="traits-5" class='section-header'><a
+                           href="#traits-5">Traits</a></h1><pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>print_area</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>HasArea</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>T</span>) {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;This shape has an area of {}&quot;</span>, <span class='ident'>shape</span>.<span class='ident'>area</span>());
 }
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span>::<span class='ident'>new</span>(<span class='number'>1.2</span>, <span class='number'>4.9</span>);
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>react</span>.<span class='ident'>area</span>());
+    <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>Circle</span> { <span class='ident'>radius</span>: <span class='number'>2.0</span> }
+    <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='number'>3.0</span>, <span class='ident'>height</span>: <span class='number'>2.0</span> }
+
+    <span class='ident'>print_area</span>(<span class='ident'>c</span>); <span class='comment'>// This shape has an area of 12.566370614</span>
+    <span class='ident'>print_area</span>(<span class='ident'>r</span>); <span class='comment'>// This shape has an area of 6.0</span>
 }
 </pre>
 
@@ -452,8 +527,6 @@
                            href="#algebraic-data-types">Algebraic data types</a></h1>
 <h1 id="pattern-matching" class='section-header'><a
                            href="#pattern-matching">Pattern matching</a></h1>
-<h1 id="traits-(=-type-classes)" class='section-header'><a
-                           href="#traits-(=-type-classes)">Traits (= type classes)</a></h1>
 <h1 id="iterators" class='section-header'><a
                            href="#iterators">Iterators</a></h1>
 <h1 id="macros" class='section-header'><a
