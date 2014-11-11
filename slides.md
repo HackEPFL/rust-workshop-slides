@@ -508,13 +508,50 @@ fn print_area<T: HasArea>(shape: T) {
 }
 
 fn main() {
-    let c = Circle { radius: 2.0 }
+    let c = Circle { radius: 1.0 }
     let r = Rectangle { width: 3.0, height: 2.0 }
 
-    print_area(c); // This shape has an area of 12.566370614
-    print_area(r); // This shape has an area of 6.0
+    print_area(c);
+    print_area(r);
 }
 ```
+
+> This shape has an area of 3.141592654
+> This shape has an area of 6.0
+
+# Traits
+
+```rust
+print_area(10i);
+```
+
+> error: failed to find an implementation of trait `main::HasArea` for `int`
+
+# Traits
+
+We can implement traits for any type. So this would work, even if it makes no sense:
+
+```rust
+impl HasArea for int {
+    fn area(&self) -> f64 {
+        println!("this is silly");
+        *self as f64
+    }
+}
+
+fn main() {
+    10i.area();
+    print_area(10i);
+}
+```
+
+Implementing traits for primitive types should generally be avoided.
+
+# Traits
+
+One more restriction:
+
+> Either the trait or the type you're writing the `impl` for must be inside your crate.
 
 # Algebraic data types
 # Pattern matching
