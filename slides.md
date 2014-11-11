@@ -44,13 +44,310 @@ fn main() {
 
 # High-level features
 
-* Algebraic data types
-* Pattern matching
+* Type inference
 * Higher-order functions
 * Closures
+* Structs and methods
+* Iterators
+* Algebraic data types
+* Pattern matching
 * Traits (= type classes)
-* Type inference
 * Macros
+
+# But first, the basics
+
+* Primitive types
+* Variables bindings
+* Functions
+* Printing stuff
+* Control structures
+* Strings
+* Arrays, vectors and slices
+
+# Numeric types
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Example</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Signed integer</td>
+        <td><code>int</code></td>
+        <td><code>5i</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Unsigned integer</td>
+        <td><code>uint</code></td>
+        <td><code>5u</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>8-bit uint</td>
+        <td><code>u8</code></td>
+        <td><code>5u8</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>16-bit uint</td>
+        <td><code>u16</code></td>
+        <td><code>5i</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>etc.</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>32-bit float</td>
+        <td><code>f32</code></td>
+        <td><code>3.14f32</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>64-bit float</td>
+        <td><code>f64</code></td>
+        <td><code>3.14_f64</code></td>
+        <td></td>
+    </tr>
+</table>
+
+# Primitive types
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Example</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Unit</td>
+        <td><code>()</code></td>
+        <td><code>()</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Boolean</td>
+        <td><code>bool</code></td>
+        <td><code>true | false</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Array</td>
+        <td><code>[T]</code></td>
+        <td><code>[1, 2, 3]</code>
+        <td>fixed size, can be allocated on either the stack or the heap</td>
+    </tr>
+    <tr>
+        <td>Slice</td>
+        <td><code>&[T]</code></td>
+        <td><code>&[1, 2, 3]</code>
+        <td>'view' into an array, doesn't own the data it points to, but borrows it</td>
+    </tr>
+    <tr>
+        <td>Tuple</td>
+        <td><code>(A, B, C...)</code></td>
+        <td><code>("Rust", 2006i, 'r')</code></td>
+        <td>32-bit unsigned word</td>
+    </tr>
+ 
+</table>
+
+# Textual types
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Example</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Unicode scalar value</td>
+        <td><code>char</code></td>
+        <td><code>'a'</code></td>
+        <td>32-bit unsigned word</td>
+    </tr>
+    <tr>
+        <td>Unicode scalar array</td>
+        <td><code>[char]</code></td>
+        <td><code>['a', 'b', 'c']</code></td>
+        <td>~ UTF-32 string</td>
+    </tr>
+    <tr>
+        <td>Unicode string</td>
+        <td><code>str</code></td>
+        <td><code>"rust is cool"</code></td>
+        <td>array 8-bit unsigned bytes<br>
+            ~ sequence of UTF-8 codepoints</td>
+    </tr>
+</table>
+
+# Variables bindings
+
+```rust
+let x = 5i;
+let x: int = 5i;
+
+let mut y = 2i;
+y += 1;
+```
+
+# Mutability
+
+```rust
+let x = 5i;
+
+x = x + 1;      // error
+```
+
+# Mutability
+
+```rust
+let mut x = 5i;
+
+x = x + 1;      // ok
+```
+
+# Mutability
+
+```rust
+let x = 5i;
+let mut y = x;  // error
+```
+
+# Mutability
+
+```rust
+let mut x = 5i;
+let y = x;      // ok
+```
+
+# Functions
+
+```rust
+fn main() {
+    let res = do_stuff(2, 3);
+    println!("result is {}", res);
+}
+
+fn do_stuff(a: int, b: int) -> int {
+    let c = a + b;
+    let d = c * 2;
+    
+    d
+}
+```
+
+Must omit last semicolon (TODO: explain semantics)
+
+# Printing stuff
+
+```rust
+fn main() {
+    let name = "John";
+    let age = 42;
+    
+    println!("{} is {}", name, age);
+}
+```
+
+# Printing stuff
+
+```rust
+fn main() {
+    let name = "John";
+    let age = 42;
+    
+    println!("{1} is {0}", age, name);
+}
+```
+
+# Conditionals
+
+```rust
+if age > 16 {
+    println!("Have a beer!");
+}
+else {
+    println!("Sorry, no beer for you.");
+}
+```
+
+# Conditionals
+
+`if/else` is an expression:
+
+```rust
+let score = if dead {
+    0
+} else {
+    score + 1
+};
+```
+
+# Looping
+
+```rust
+while x < 10 {
+    // do stuff
+}
+```
+
+# Looping
+
+Instead of
+
+```rust
+while true {
+    // do stuff
+}
+```
+
+use
+
+```rust
+loop {
+    // do stuff
+}
+```
+
+Rust's control-flow analysis treats this construct differently than a `while true`, which leads to better generated code.
+
+# Looping
+
+```rust
+for x in range(0i, 10i) {
+    // do stuff
+}
+```
+
+# Looping
+
+```rust
+for var in expression {
+    code
+}
+```
+
+`expression` must be an iterator (we'll talk about it later).
+
+# Strings
+
+* String slices
+* Growable strings
+
+TODO
+
+# Arrays, vectors and slices
+
+TODO
 
 # Low-level control
 
@@ -387,6 +684,10 @@ fn main() {
 * In low-level languages, we allocate and free memory, close sockets, etc.
 * In high-level languages, we never free memory, but we routinely close sockets and files, and release locks.
 * In Rust we do neither :)
+
+# Cargo
+
+TODO
 
 # Thank you!
 

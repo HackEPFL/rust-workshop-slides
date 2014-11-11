@@ -71,14 +71,300 @@
 <h1 id="high-level-features" class='section-header'><a
                            href="#high-level-features">High-level features</a></h1>
 <ul>
-<li>Algebraic data types</li>
-<li>Pattern matching</li>
+<li>Type inference</li>
 <li>Higher-order functions</li>
 <li>Closures</li>
+<li>Structs and methods</li>
+<li>Iterators</li>
+<li>Algebraic data types</li>
+<li>Pattern matching</li>
 <li>Traits (= type classes)</li>
-<li>Type inference</li>
 <li>Macros</li>
 </ul>
+
+<h1 id="but-first,-the-basics" class='section-header'><a
+                           href="#but-first,-the-basics">But first, the basics</a></h1>
+<ul>
+<li>Primitive types</li>
+<li>Variables bindings</li>
+<li>Functions</li>
+<li>Printing stuff</li>
+<li>Control structures</li>
+<li>Strings</li>
+<li>Arrays, vectors and slices</li>
+</ul>
+
+<h1 id="numeric-types" class='section-header'><a
+                           href="#numeric-types">Numeric types</a></h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Example</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Signed integer</td>
+        <td><code>int</code></td>
+        <td><code>5i</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Unsigned integer</td>
+        <td><code>uint</code></td>
+        <td><code>5u</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>8-bit uint</td>
+        <td><code>u8</code></td>
+        <td><code>5u8</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>16-bit uint</td>
+        <td><code>u16</code></td>
+        <td><code>5i</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>etc.</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>32-bit float</td>
+        <td><code>f32</code></td>
+        <td><code>3.14f32</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>64-bit float</td>
+        <td><code>f64</code></td>
+        <td><code>3.14_f64</code></td>
+        <td></td>
+    </tr>
+</table>
+
+<h1 id="primitive-types" class='section-header'><a
+                           href="#primitive-types">Primitive types</a></h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Example</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Unit</td>
+        <td><code>()</code></td>
+        <td><code>()</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Boolean</td>
+        <td><code>bool</code></td>
+        <td><code>true | false</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Array</td>
+        <td><code>[T]</code></td>
+        <td><code>[1, 2, 3]</code>
+        <td>fixed size, can be allocated on either the stack or the heap</td>
+    </tr>
+    <tr>
+        <td>Slice</td>
+        <td><code>&[T]</code></td>
+        <td><code>&[1, 2, 3]</code>
+        <td>'view' into an array, doesn't own the data it points to, but borrows it</td>
+    </tr>
+    <tr>
+        <td>Tuple</td>
+        <td><code>(A, B, C...)</code></td>
+        <td><code>("Rust", 2006i, 'r')</code></td>
+        <td>32-bit unsigned word</td>
+    </tr>
+ 
+</table>
+
+<h1 id="textual-types" class='section-header'><a
+                           href="#textual-types">Textual types</a></h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Example</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Unicode scalar value</td>
+        <td><code>char</code></td>
+        <td><code>'a'</code></td>
+        <td>32-bit unsigned word</td>
+    </tr>
+    <tr>
+        <td>Unicode scalar array</td>
+        <td><code>[char]</code></td>
+        <td><code>['a', 'b', 'c']</code></td>
+        <td>~ UTF-32 string</td>
+    </tr>
+    <tr>
+        <td>Unicode string</td>
+        <td><code>str</code></td>
+        <td><code>"rust is cool"</code></td>
+        <td>array 8-bit unsigned bytes<br>
+            ~ sequence of UTF-8 codepoints</td>
+    </tr>
+</table>
+
+<h1 id="variables-bindings" class='section-header'><a
+                           href="#variables-bindings">Variables bindings</a></h1><pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
+<span class='kw'>let</span> <span class='ident'>x</span>: <span class='ident'>int</span> <span class='op'>=</span> <span class='number'>5i</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='number'>2i</span>;
+<span class='ident'>y</span> <span class='op'>+=</span> <span class='number'>1</span>;
+</pre>
+
+<h1 id="mutability" class='section-header'><a
+                           href="#mutability">Mutability</a></h1><pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
+
+<span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>x</span> <span class='op'>+</span> <span class='number'>1</span>;      <span class='comment'>// error</span>
+</pre>
+
+<h1 id="mutability-1" class='section-header'><a
+                           href="#mutability-1">Mutability</a></h1><pre class='rust '>
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
+
+<span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>x</span> <span class='op'>+</span> <span class='number'>1</span>;      <span class='comment'>// ok</span>
+</pre>
+
+<h1 id="mutability-2" class='section-header'><a
+                           href="#mutability-2">Mutability</a></h1><pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='ident'>x</span>;  <span class='comment'>// error</span>
+</pre>
+
+<h1 id="mutability-3" class='section-header'><a
+                           href="#mutability-3">Mutability</a></h1><pre class='rust '>
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
+<span class='kw'>let</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='ident'>x</span>;      <span class='comment'>// ok</span>
+</pre>
+
+<h1 id="functions" class='section-header'><a
+                           href="#functions">Functions</a></h1><pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>do_stuff</span>(<span class='number'>2</span>, <span class='number'>3</span>);
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;result is {}&quot;</span>, <span class='ident'>res</span>);
+}
+
+<span class='kw'>fn</span> <span class='ident'>do_stuff</span>(<span class='ident'>a</span>: <span class='ident'>int</span>, <span class='ident'>b</span>: <span class='ident'>int</span>) <span class='op'>-&gt;</span> <span class='ident'>int</span> {
+    <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>b</span>;
+    <span class='kw'>let</span> <span class='ident'>d</span> <span class='op'>=</span> <span class='ident'>c</span> <span class='op'>*</span> <span class='number'>2</span>;
+    
+    <span class='ident'>d</span>
+}
+</pre>
+
+<p>Must omit last semicolon (TODO: explain semantics)</p>
+
+<h1 id="printing-stuff" class='section-header'><a
+                           href="#printing-stuff">Printing stuff</a></h1><pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='string'>&quot;John&quot;</span>;
+    <span class='kw'>let</span> <span class='ident'>age</span> <span class='op'>=</span> <span class='number'>42</span>;
+    
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>name</span>, <span class='ident'>age</span>);
+}
+</pre>
+
+<h1 id="printing-stuff-1" class='section-header'><a
+                           href="#printing-stuff-1">Printing stuff</a></h1><pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='string'>&quot;John&quot;</span>;
+    <span class='kw'>let</span> <span class='ident'>age</span> <span class='op'>=</span> <span class='number'>42</span>;
+    
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{1} is {0}&quot;</span>, <span class='ident'>age</span>, <span class='ident'>name</span>);
+}
+</pre>
+
+<h1 id="conditionals" class='section-header'><a
+                           href="#conditionals">Conditionals</a></h1><pre class='rust '>
+<span class='kw'>if</span> <span class='ident'>age</span> <span class='op'>&gt;</span> <span class='number'>16</span> {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Have a beer!&quot;</span>);
+}
+<span class='kw'>else</span> {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Sorry, no beer for you.&quot;</span>);
+}
+</pre>
+
+<h1 id="conditionals-1" class='section-header'><a
+                           href="#conditionals-1">Conditionals</a></h1>
+<p><code>if/else</code> is an expression:</p>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>score</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>dead</span> {
+    <span class='number'>0</span>
+} <span class='kw'>else</span> {
+    <span class='ident'>score</span> <span class='op'>+</span> <span class='number'>1</span>
+};
+</pre>
+
+<h1 id="looping" class='section-header'><a
+                           href="#looping">Looping</a></h1><pre class='rust '>
+<span class='kw'>while</span> <span class='ident'>x</span> <span class='op'>&lt;</span> <span class='number'>10</span> {
+    <span class='comment'>// do stuff</span>
+}
+</pre>
+
+<h1 id="looping-1" class='section-header'><a
+                           href="#looping-1">Looping</a></h1>
+<p>Instead of</p>
+<pre class='rust '>
+<span class='kw'>while</span> <span class='boolval'>true</span> {
+    <span class='comment'>// do stuff</span>
+}
+</pre>
+
+<p>use</p>
+<pre class='rust '>
+<span class='kw'>loop</span> {
+    <span class='comment'>// do stuff</span>
+}
+</pre>
+
+<p>Rust&#39;s control-flow analysis treats this construct differently than a <code>while true</code>, which leads to better generated code.</p>
+
+<h1 id="looping-2" class='section-header'><a
+                           href="#looping-2">Looping</a></h1><pre class='rust '>
+<span class='kw'>for</span> <span class='ident'>x</span> <span class='kw'>in</span> <span class='ident'>range</span>(<span class='number'>0i</span>, <span class='number'>10i</span>) {
+    <span class='comment'>// do stuff</span>
+}
+</pre>
+
+<h1 id="looping-3" class='section-header'><a
+                           href="#looping-3">Looping</a></h1><pre class='rust '>
+<span class='kw'>for</span> <span class='ident'>var</span> <span class='kw'>in</span> <span class='ident'>expression</span> {
+    <span class='ident'>code</span>
+}
+</pre>
+
+<p><code>expression</code> must be an iterator (we&#39;ll talk about it later).</p>
+
+<h1 id="strings" class='section-header'><a
+                           href="#strings">Strings</a></h1>
+<ul>
+<li>String slices</li>
+<li>Growable strings</li>
+</ul>
+
+<p>TODO</p>
+
+<h1 id="arrays,-vectors-and-slices" class='section-header'><a
+                           href="#arrays,-vectors-and-slices">Arrays, vectors and slices</a></h1>
+<p>TODO</p>
 
 <h1 id="low-level-control" class='section-header'><a
                            href="#low-level-control">Low-level control</a></h1>
@@ -426,6 +712,10 @@ error: aborting due to previous error
 <li>In high-level languages, we never free memory, but we routinely close sockets and files, and release locks.</li>
 <li>In Rust we do neither :)</li>
 </ul>
+
+<h1 id="cargo" class='section-header'><a
+                           href="#cargo">Cargo</a></h1>
+<p>TODO</p>
 
 <h1 id="thank-you!" class='section-header'><a
                            href="#thank-you!">Thank you!</a></h1>

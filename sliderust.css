@@ -53,3 +53,7 @@ ul {
 li::before {
     content: "\2022\A0";
 }
+
+table {
+  font-size: 0.8em;
+}
