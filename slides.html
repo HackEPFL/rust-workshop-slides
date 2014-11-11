@@ -72,6 +72,7 @@
                            href="#high-level-features">High-level features</a></h1>
 <ul>
 <li>Type inference</li>
+<li>Lambdas</li>
 <li>Higher-order functions</li>
 <li>Closures</li>
 <li>Structs and methods</li>
@@ -366,6 +367,48 @@
                            href="#arrays,-vectors-and-slices">Arrays, vectors and slices</a></h1>
 <p>TODO</p>
 
+<h1 id="high-level-features-1" class='section-header'><a
+                           href="#high-level-features-1">High-level features</a></h1>
+<h1 id="lambdas" class='section-header'><a
+                           href="#lambdas">Lambdas</a></h1><pre class='rust '>
+    <span class='kw'>let</span> <span class='ident'>xs</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>(<span class='number'>1i</span>, <span class='number'>2i</span>, <span class='number'>3i</span>);
+    <span class='kw'>let</span> <span class='ident'>ys</span> <span class='op'>=</span> <span class='ident'>xs</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span> <span class='op'>*</span> <span class='number'>2</span>);
+    <span class='comment'>// ys == [2i, 4i, 6i]</span>
+</pre>
+
+<h1 id="higher-order-functions" class='section-header'><a
+                           href="#higher-order-functions">Higher-order functions</a></h1>
+<p>Not really, since can&#39;t return closures from a function.</p>
+<pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>add_one</span>(<span class='ident'>x</span>: <span class='ident'>int</span>) <span class='op'>-&gt;</span> <span class='ident'>int</span> {
+    <span class='ident'>x</span> <span class='op'>+</span> <span class='number'>1</span>
+}
+
+<span class='kw'>fn</span> <span class='ident'>apply</span>(<span class='ident'>x</span>: <span class='ident'>int</span>, <span class='ident'>adder</span>: <span class='op'>|</span><span class='ident'>int</span><span class='op'>|</span> <span class='op'>-&gt;</span> <span class='ident'>int</span>) <span class='op'>-&gt;</span> <span class='ident'>int</span> {
+    <span class='ident'>adder</span>(<span class='ident'>x</span>)
+}
+</pre>
+
+<h1 id="closures" class='section-header'><a
+                           href="#closures">Closures</a></h1><pre class='rust '>
+    <span class='kw'>let</span> <span class='ident'>factor</span> <span class='op'>=</span> <span class='number'>8</span>;
+    <span class='kw'>let</span> <span class='ident'>xs</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>(<span class='number'>1i</span>, <span class='number'>2i</span>, <span class='number'>3i</span>);
+    <span class='kw'>let</span> <span class='ident'>ys</span> <span class='op'>=</span> <span class='ident'>xs</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span> <span class='op'>*</span> <span class='ident'>factor</span>);
+    <span class='comment'>// ys == [8i, 16i, 24i]</span>
+</pre>
+
+<h1 id="structs-and-methods" class='section-header'><a
+                           href="#structs-and-methods">Structs and methods</a></h1>
+<h1 id="iterators" class='section-header'><a
+                           href="#iterators">Iterators</a></h1>
+<h1 id="algebraic-data-types" class='section-header'><a
+                           href="#algebraic-data-types">Algebraic data types</a></h1>
+<h1 id="pattern-matching" class='section-header'><a
+                           href="#pattern-matching">Pattern matching</a></h1>
+<h1 id="traits-(=-type-classes)" class='section-header'><a
+                           href="#traits-(=-type-classes)">Traits (= type classes)</a></h1>
+<h1 id="macros" class='section-header'><a
+                           href="#macros">Macros</a></h1>
 <h1 id="low-level-control" class='section-header'><a
                            href="#low-level-control">Low-level control</a></h1>
 <ul>

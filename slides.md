@@ -45,6 +45,7 @@ fn main() {
 # High-level features
 
 * Type inference
+* Lambdas
 * Higher-order functions
 * Closures
 * Structs and methods
@@ -348,6 +349,46 @@ TODO
 # Arrays, vectors and slices
 
 TODO
+
+# High-level features
+
+# Lambdas
+
+```rust
+    let xs = vec!(1i, 2i, 3i);
+    let ys = xs.map(|x| x * 2);
+    // ys == [2i, 4i, 6i]
+```
+
+# Higher-order functions
+
+Not really, since can't return closures from a function.
+
+```rust
+fn add_one(x: int) -> int {
+    x + 1
+}
+
+fn apply(x: int, adder: |int| -> int) -> int {
+    adder(x)
+}
+```
+
+# Closures
+
+```rust
+    let factor = 8;
+    let xs = vec!(1i, 2i, 3i);
+    let ys = xs.map(|x| x * factor);
+    // ys == [8i, 16i, 24i]
+```
+
+# Structs and methods
+# Iterators
+# Algebraic data types
+# Pattern matching
+# Traits (= type classes)
+# Macros
 
 # Low-level control
 
