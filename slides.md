@@ -295,11 +295,13 @@ else {
 `if/else` is an expression:
 
 ```rust
-let score = if dead {
+let score = if down {
     0
 } else {
     score + 1
 };
+
+let score = if down { 0 } else { score + 1 };
 ```
 
 # Looping
