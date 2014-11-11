@@ -73,7 +73,6 @@
 <ul>
 <li>Type inference</li>
 <li>Lambdas</li>
-<li>Higher-order functions</li>
 <li>Closures</li>
 <li>Structs and methods</li>
 <li>Iterators</li>
@@ -81,6 +80,7 @@
 <li>Pattern matching</li>
 <li>Traits (= type classes)</li>
 <li>Macros</li>
+<li>Modules</li>
 </ul>
 
 <h1 id="but-first,-the-basics" class='section-header'><a
@@ -315,13 +315,13 @@
                            href="#conditionals-1">Conditionals</a></h1>
 <p><code>if/else</code> is an expression:</p>
 <pre class='rust '>
-<span class='kw'>let</span> <span class='ident'>score</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>down</span> {
-    <span class='number'>0</span>
+<span class='kw'>let</span> <span class='ident'>message</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>health</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
+    <span class='string'>&quot;Good job&quot;</span>
 } <span class='kw'>else</span> {
-    <span class='ident'>score</span> <span class='op'>+</span> <span class='number'>1</span>
+    <span class='string'>&quot;Game over&quot;</span>
 };
 
-<span class='kw'>let</span> <span class='ident'>score</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>down</span> { <span class='number'>0</span> } <span class='kw'>else</span> { <span class='ident'>score</span> <span class='op'>+</span> <span class='number'>1</span> };
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>message</span>);
 </pre>
 
 <h1 id="while" class='section-header'><a
@@ -369,7 +369,7 @@
                            href="#strings">Strings</a></h1>
 <ul>
 <li>String slices</li>
-<li>Growable strings</li>
+<li>Growable strings (<code>String</code>)</li>
 </ul>
 
 <p>TODO</p>
@@ -387,10 +387,8 @@
     <span class='comment'>// ys == [2i, 4i, 6i]</span>
 </pre>
 
-<h1 id="higher-order-functions" class='section-header'><a
-                           href="#higher-order-functions">Higher-order functions</a></h1>
-<p><a href="http://stackoverflow.com/questions/25445761/returning-a-closure-from-a-function">http://stackoverflow.com/questions/25445761/returning-a-closure-from-a-function</a></p>
-<pre class='rust '>
+<h1 id="lambdas-1" class='section-header'><a
+                           href="#lambdas-1">Lambdas</a></h1><pre class='rust '>
 <span class='kw'>fn</span> <span class='ident'>add_one</span>(<span class='ident'>x</span>: <span class='ident'>int</span>) <span class='op'>-&gt;</span> <span class='ident'>int</span> {
     <span class='ident'>x</span> <span class='op'>+</span> <span class='number'>1</span>
 }
@@ -405,6 +403,7 @@
     <span class='kw'>let</span> <span class='ident'>factor</span> <span class='op'>=</span> <span class='number'>8</span>;
     <span class='kw'>let</span> <span class='ident'>xs</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>(<span class='number'>1i</span>, <span class='number'>2i</span>, <span class='number'>3i</span>);
     <span class='kw'>let</span> <span class='ident'>ys</span> <span class='op'>=</span> <span class='ident'>xs</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span> <span class='op'>*</span> <span class='ident'>factor</span>);
+    
     <span class='comment'>// ys == [8i, 16i, 24i]</span>
 </pre>
 
@@ -515,22 +514,115 @@
 }
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>Circle</span> { <span class='ident'>radius</span>: <span class='number'>2.0</span> }
+    <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>Circle</span> { <span class='ident'>radius</span>: <span class='number'>1.0</span> }
     <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='number'>3.0</span>, <span class='ident'>height</span>: <span class='number'>2.0</span> }
 
-    <span class='ident'>print_area</span>(<span class='ident'>c</span>); <span class='comment'>// This shape has an area of 12.566370614</span>
-    <span class='ident'>print_area</span>(<span class='ident'>r</span>); <span class='comment'>// This shape has an area of 6.0</span>
+    <span class='ident'>print_area</span>(<span class='ident'>c</span>);
+    <span class='ident'>print_area</span>(<span class='ident'>r</span>);
 }
 </pre>
 
-<h1 id="algebraic-data-types" class='section-header'><a
-                           href="#algebraic-data-types">Algebraic data types</a></h1>
+<blockquote>
+<p>This shape has an area of 3.141592654<br>
+This shape has an area of 6.0</p>
+</blockquote>
+
+<h1 id="traits-6" class='section-header'><a
+                           href="#traits-6">Traits</a></h1><pre class='rust '>
+<span class='ident'>print_area</span>(<span class='number'>10i</span>);
+</pre>
+
+<blockquote>
+<p>error: failed to find an implementation of trait <code>main::HasArea</code> for <code>int</code></p>
+</blockquote>
+
+<h1 id="traits-7" class='section-header'><a
+                           href="#traits-7">Traits</a></h1>
+<p>We can implement traits for any type. So this would work, even if it makes no sense:</p>
+<pre class='rust '>
+<span class='kw'>impl</span> <span class='ident'>HasArea</span> <span class='kw'>for</span> <span class='ident'>int</span> {
+    <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f64</span> {
+        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;this is silly&quot;</span>);
+        <span class='op'>*</span><span class='self'>self</span> <span class='kw'>as</span> <span class='ident'>f64</span>
+    }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='number'>10i</span>.<span class='ident'>area</span>();
+    <span class='ident'>print_area</span>(<span class='number'>10i</span>);
+}
+</pre>
+
+<p>Implementing traits for primitive types should generally be avoided.</p>
+
+<h1 id="traits-8" class='section-header'><a
+                           href="#traits-8">Traits</a></h1>
+<p>One restriction:</p>
+
+<blockquote>
+<p>Either the trait or the type you&#39;re writing the <code>impl</code> for must be inside your crate.</p>
+</blockquote>
+
+<h1 id="enums" class='section-header'><a
+                           href="#enums">Enums</a></h1>
+<ul>
+<li>Also called <code>sum types</code> in the litterature.</li>
+<li>Similar to Haskell&#39;s <code>data</code> and Scala&#39;s <code>case class</code>.</li>
+</ul>
+<pre class='rust '>
+<span class='kw'>enum</span> <span class='ident'>Boolean</span> {
+    <span class='ident'>True</span>,
+    <span class='ident'>False</span>
+}
+</pre>
+
+<blockquote>
+<p>Rust&#39;s <code>bool</code> type is <strong>not</strong> implemented this way as it is a primitive.</p>
+</blockquote>
+
+<h1 id="enums-1" class='section-header'><a
+                           href="#enums-1">Enums</a></h1><pre class='rust '>
+<span class='kw'>enum</span> <span class='ident'>Boolean</span> {
+    <span class='ident'>True</span>,
+    <span class='ident'>False</span>
+}
+
+<span class='kw'>let</span> <span class='ident'>b</span>: <span class='ident'>Boolean</span> <span class='op'>=</span> <span class='ident'>True</span>;
+</pre>
+
+<p>A value of type <code>Boolean</code> can be either <code>True</code> or <code>False</code>.</p>
+
+<h1 id="enum" class='section-header'><a
+                           href="#enum">Enum</a></h1>
+<p>From the standard library (almost):</p>
+<pre class='rust '>
+<span class='kw'>enum</span> <span class='ident'>Ordering</span> { <span class='ident'>Less</span>, <span class='ident'>Equal</span>, <span class='ident'>Greater</span> }
+
+<span class='kw'>fn</span> <span class='ident'>cmp</span>(<span class='ident'>a</span>: <span class='ident'>int</span>, <span class='ident'>b</span>: <span class='ident'>int</span>) <span class='op'>-&gt;</span> <span class='ident'>Ordering</span> {
+    <span class='kw'>if</span>      <span class='ident'>a</span> <span class='op'>&lt;</span> <span class='ident'>b</span> { <span class='ident'>Less</span> }
+    <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>a</span> <span class='op'>&gt;</span> <span class='ident'>b</span> { <span class='ident'>Greater</span> }
+    <span class='kw'>else</span>          { <span class='ident'>Equal</span> }
+}
+
+<span class='kw'>let</span> <span class='ident'>ordering</span> <span class='op'>=</span> <span class='ident'>cmp</span>(<span class='ident'>x</span>, <span class='ident'>y</span>);
+
+<span class='kw'>if</span> <span class='ident'>ordering</span> <span class='op'>==</span> <span class='ident'>Less</span> {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;less&quot;</span>);
+} <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>ordering</span> <span class='op'>==</span> <span class='ident'>Greater</span> {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;greater&quot;</span>);
+} <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>ordering</span> <span class='op'>==</span> <span class='ident'>Equal</span> {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;equal&quot;</span>);
+}
+</pre>
+
 <h1 id="pattern-matching" class='section-header'><a
                            href="#pattern-matching">Pattern matching</a></h1>
 <h1 id="iterators" class='section-header'><a
                            href="#iterators">Iterators</a></h1>
 <h1 id="macros" class='section-header'><a
                            href="#macros">Macros</a></h1>
+<h1 id="modules" class='section-header'><a
+                           href="#modules">Modules</a></h1>
 <h1 id="low-level-control" class='section-header'><a
                            href="#low-level-control">Low-level control</a></h1>
 <ul>
