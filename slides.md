@@ -50,6 +50,7 @@ fn main() {
 * Closures
 * Traits (= type classes)
 * Type inference
+* Macros
 
 # Low-level control
 
