@@ -304,7 +304,7 @@ let score = if down {
 let score = if down { 0 } else { score + 1 };
 ```
 
-# Looping
+# While
 
 ```rust
 while x < 10 {
@@ -312,7 +312,7 @@ while x < 10 {
 }
 ```
 
-# Looping
+# Loop
 
 Instead of
 
@@ -332,7 +332,7 @@ loop {
 
 Rust's control-flow analysis treats this construct differently than a `while true`, which leads to better generated code.
 
-# Looping
+# For
 
 ```rust
 for x in range(0i, 10i) {
@@ -340,7 +340,7 @@ for x in range(0i, 10i) {
 }
 ```
 
-# Looping
+# For
 
 ```rust
 for var in expression {
@@ -348,7 +348,7 @@ for var in expression {
 }
 ```
 
-`expression` must be an iterator (we'll talk about it later).
+`expression` must be an `Iterator` (we'll talk about it later).
 
 # Strings
 
