@@ -248,11 +248,7 @@
 <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='ident'>x</span>;
 
-<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;x = {}, y = {}&quot;</span>, <span class='ident'>x</span>, <span class='ident'>y</span>); <span class='comment'>// =&gt; x = 5, y = 5</span>
-
-<span class='ident'>y</span> <span class='op'>=</span> <span class='number'>6i</span>;
-
-<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;x = {}, y = {}&quot;</span>, <span class='ident'>x</span>, <span class='ident'>y</span>); <span class='comment'>// =&gt; x = 5, y = 6</span>
+<span class='ident'>y</span> <span class='op'>=</span> <span class='ident'>y</span> <span class='op'>+</span> <span class='number'>1</span>;
 </pre>
 
 <h1 id="functions" class='section-header'><a

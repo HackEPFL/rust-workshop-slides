@@ -222,11 +222,7 @@ x = x + 1; // ok
 let x = 5i;
 let mut y = x;
 
-println!("x = {}, y = {}", x, y); // => x = 5, y = 5
-
-y = 6i;
-
-println!("x = {}, y = {}", x, y); // => x = 5, y = 6
+y = y + 1;
 ```
 
 # Functions
