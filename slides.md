@@ -223,13 +223,6 @@ let mut x = 5i;
 let y = x; // ok
 ```
 
-# Mutability
-
-```rust
-let mut x = 5i;
-let y = x;      // ok
-```
-
 # Functions
 
 ```rust
@@ -240,13 +233,29 @@ fn main() {
 
 fn do_stuff(a: int, b: int) -> int {
     let c = a + b;
-    let d = c * 2;
-    
-    d
+
+    return c * 2;
 }
 ```
 
-Must omit last semicolon (TODO: explain semantics)
+# Functions
+
+You can omit `return` if you want return the last expression.
+
+```rust
+fn main() {
+    let res = do_stuff(2, 3);
+    println!("result is {}", res);
+}
+
+fn do_stuff(a: int, b: int) -> int {
+    let c = a + b;
+    
+    c * 2 // ! no semicolon
+}
+```
+
+But you also need to omit the last semicolon, otherwise the function will return `()`.
 
 # Printing stuff
 
