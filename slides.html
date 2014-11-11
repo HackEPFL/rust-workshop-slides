@@ -165,17 +165,9 @@
 }
 </pre>
 
-<h1 id="ownership-&amp;-borrowing" class='section-header'><a
-                           href="#ownership-&amp;-borrowing">Ownership &amp; Borrowing</a></h1>
-<p>When you create a resource, you&#39;re the <strong>owner</strong> of that resource.</p>
-
-<p>Being an owner affords you some privileges:</p>
-
-<ul>
-<li>You control when that resource is deallocated.</li>
-<li>You may lend that resource, <strong>immutably</strong>, to <strong>as many</strong> borrowers as you&#39;d like.</li>
-<li>You may lend that resource, <strong>mutably</strong>, to a <strong>single</strong> borrower.</li>
-</ul>
+<h1 id="move-&amp;-copy" class='section-header'><a
+                           href="#move-&amp;-copy">Move &amp; Copy</a></h1>
+<p>When you pass data to a function (or even assign it to a variable), that data can be copied, moved, or borrowed (more about it soon).</p>
 
 <h1 id="copy" class='section-header'><a
                            href="#copy">Copy</a></h1><pre class='rust '>
@@ -198,78 +190,105 @@
 }
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
-    <span class='ident'>show</span>(<span class='ident'>p</span>);
-    <span class='ident'>show</span>(<span class='ident'>p</span>);
+    <span class='kw'>let</span> <span class='ident'>john</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
+    <span class='ident'>show</span>(<span class='ident'>john</span>);
+    
+    <span class='comment'>// `john` has already been deallocated</span>
 }
 
-<span class='kw'>fn</span> <span class='ident'>show</span>(<span class='ident'>p</span>: <span class='ident'>Person</span>) {
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>p</span>.<span class='ident'>name</span>, <span class='ident'>p</span>.<span class='ident'>age</span>);
+<span class='kw'>fn</span> <span class='ident'>show</span>(<span class='ident'>person</span>: <span class='ident'>Person</span>) {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>person</span>.<span class='ident'>name</span>, <span class='ident'>person</span>.<span class='ident'>age</span>);
     
-    <span class='comment'>// `p` will be deallocated here</span>
+    <span class='comment'>// `john` will be deallocated here</span>
 }
 </pre>
 
 <h1 id="move-1" class='section-header'><a
-                           href="#move-1">Move</a></h1>
-<pre><code class="language-norust">error: use of moved value: `p`
-     show(p);
+                           href="#move-1">Move</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Person</span> {
+    <span class='ident'>name</span>: <span class='ident'>String</span>,
+    <span class='ident'>age</span>: <span class='ident'>uint</span>
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>john</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
+    <span class='ident'>show</span>(<span class='ident'>john</span>);
+    <span class='ident'>show</span>(<span class='ident'>john</span>);
+}
+
+<span class='kw'>fn</span> <span class='ident'>show</span>(<span class='ident'>person</span>: <span class='ident'>Person</span>) {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>person</span>.<span class='ident'>name</span>, <span class='ident'>person</span>.<span class='ident'>age</span>);
+    
+    <span class='comment'>// `john` will be deallocated here</span>
+}
+</pre>
+
+<h1 id="move-2" class='section-header'><a
+                           href="#move-2">Move</a></h1>
+<pre><code class="language-norust">error: use of moved value: `john`
+     show(john);
           ^
-note: `p` moved here because it has type `Person`, which is non-copyable
-     show(p);
+note: `john` moved here because it has type `Person`, which is non-copyable
+     show(john);
           ^
 error: aborting due to previous error
 </code></pre>
 
-<h1 id="move-2" class='section-header'><a
-                           href="#move-2">Move</a></h1><pre class='rust '>
-<span class='kw'>struct</span> <span class='ident'>Person</span> {
-    <span class='ident'>name</span>: <span class='ident'>String</span>,
-    <span class='ident'>age</span>: <span class='ident'>uint</span>
-}
+<h1 id="move-3" class='section-header'><a
+                           href="#move-3">Move</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='ident'>String</span>, <span class='ident'>age</span>: <span class='ident'>uint</span> }
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
-    <span class='ident'>show</span>(<span class='ident'>p</span>);
-    <span class='ident'>show</span>(<span class='ident'>p</span>); <span class='comment'>// error</span>
-}
-
-<span class='kw'>fn</span> <span class='ident'>show</span>(<span class='ident'>p</span>: <span class='ident'>Person</span>) {
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>p</span>.<span class='ident'>name</span>, <span class='ident'>p</span>.<span class='ident'>age</span>);
+    <span class='kw'>let</span> <span class='ident'>john</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
     
-    <span class='comment'>// `p` will be deallocated here</span>
+    <span class='comment'>// `john` moves into show here</span>
+    <span class='ident'>show</span>(<span class='ident'>john</span>);
+    <span class='comment'>// `john` is deallocated by now</span>
+    <span class='comment'>// the next line thus doesn&#39;t compile</span>
+    <span class='ident'>show</span>(<span class='ident'>john</span>);
+}
+
+<span class='kw'>fn</span> <span class='ident'>show</span>(<span class='ident'>person</span>: <span class='ident'>Person</span>) {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>person</span>.<span class='ident'>name</span>, <span class='ident'>person</span>.<span class='ident'>age</span>);
+    
+    <span class='comment'>// `john` will be deallocated here</span>
 }
 </pre>
 
-<h1 id="borrow" class='section-header'><a
-                           href="#borrow">Borrow</a></h1><pre class='rust '>
-<span class='kw'>struct</span> <span class='ident'>Person</span> {
-    <span class='ident'>name</span>: <span class='ident'>String</span>,
-    <span class='ident'>age</span>: <span class='ident'>uint</span>
-}
+<h1 id="move-(assignment)" class='section-header'><a
+                           href="#move-(assignment)">Move (assignment)</a></h1>
+<p>Assigning a value to a variable is similar to passing it to a function.</p>
+<pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='ident'>String</span>, <span class='ident'>age</span>: <span class='ident'>uint</span> }
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
-    <span class='ident'>show</span>(<span class='kw-2'>&amp;</span><span class='ident'>p</span>);
-    <span class='ident'>show</span>(<span class='kw-2'>&amp;</span><span class='ident'>p</span>);
+    <span class='kw'>let</span> <span class='ident'>john</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
+    
+    <span class='comment'>// `john` moves into `john_bis` here</span>
+    <span class='kw'>let</span> <span class='ident'>john_bis</span> <span class='op'>=</span> <span class='ident'>john</span>;
+    
+    <span class='comment'>// the next line thus won&#39;t compile</span>
+    <span class='ident'>show</span>(<span class='ident'>john</span>);
 }
 
-<span class='kw'>fn</span> <span class='ident'>show</span>(<span class='ident'>p</span>: <span class='kw-2'>&amp;</span><span class='ident'>Person</span>) {
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>p</span>.<span class='ident'>name</span>, <span class='ident'>p</span>.<span class='ident'>age</span>);
+<span class='kw'>fn</span> <span class='ident'>show</span>(<span class='ident'>person</span>: <span class='ident'>Person</span>) {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>person</span>.<span class='ident'>name</span>, <span class='ident'>person</span>.<span class='ident'>age</span>);
+    
+    <span class='comment'>// `john` will be deallocated here</span>
 }
 </pre>
 
-<h1 id="borrow-1" class='section-header'><a
-                           href="#borrow-1">Borrow</a></h1>
-<pre><code class="language-norust">John is 42
-John is 42
-</code></pre>
+<h1 id="ownership-&amp;-borrowing" class='section-header'><a
+                           href="#ownership-&amp;-borrowing">Ownership &amp; Borrowing</a></h1>
+<p>When you create a resource, you&#39;re the <strong>owner</strong> of that resource.</p>
 
-<h1 id="multiple-borrowers" class='section-header'><a
-                           href="#multiple-borrowers">Multiple borrowers</a></h1>
-<blockquote>
-<p>You may lend that resource, immutably, to as many borrowers as you&#39;d like.</p>
-</blockquote>
+<p>Being an owner affords you some privileges:</p>
+
+<ul>
+<li>You control when that resource is deallocated.</li>
+<li>You may lend that resource, <strong>immutably</strong>, to <strong>as many</strong> borrowers as you&#39;d like.</li>
+<li>You may lend that resource, <strong>mutably</strong>, to a <strong>single</strong> borrower.</li>
+</ul>
 
 <h1 id="ownership-&amp;-borrowing-1" class='section-header'><a
                            href="#ownership-&amp;-borrowing-1">Ownership &amp; Borrowing</a></h1>
@@ -280,8 +299,116 @@ John is 42
 <li>If someone is mutably borrowing your resource, you may not lend it out at all (mutably or immutably) or access it in any way.</li>
 </ul>
 
-<h1 id="borrowing" class='section-header'><a
-                           href="#borrowing">Borrowing</a></h1>
+<h1 id="borrow" class='section-header'><a
+                           href="#borrow">Borrow</a></h1>
+<blockquote>
+<p>You may lend that resource, <strong>immutably</strong>, to <strong>as many</strong> borrowers as you&#39;d like.</p>
+</blockquote>
+<pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='ident'>String</span>, <span class='ident'>age</span>: <span class='ident'>uint</span> }
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>john</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
+    
+    <span class='comment'>// `john` moves into `show`.</span>
+    <span class='ident'>show</span>(<span class='kw-2'>&amp;</span><span class='ident'>john</span>);
+    
+    <span class='comment'>// `show` hands us `john` back.</span>
+    <span class='ident'>show</span>(<span class='kw-2'>&amp;</span><span class='ident'>john</span>);
+    <span class='comment'>// the previous line will thus compile.</span>
+}
+
+<span class='kw'>fn</span> <span class='ident'>show</span>(<span class='ident'>person</span>: <span class='kw-2'>&amp;</span><span class='ident'>Person</span>) {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{} is {}&quot;</span>, <span class='ident'>person</span>.<span class='ident'>name</span>, <span class='ident'>person</span>.<span class='ident'>age</span>);
+}
+</pre>
+
+<h1 id="borrow-1" class='section-header'><a
+                           href="#borrow-1">Borrow</a></h1>
+<pre><code class="language-norust">John is 42
+John is 42
+</code></pre>
+
+<h1 id="mutable-borrow" class='section-header'><a
+                           href="#mutable-borrow">Mutable borrow</a></h1>
+<blockquote>
+<p>You may lend that resource, <strong>mutably</strong>, to a <strong>single</strong> borrower.</p>
+</blockquote>
+<pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='ident'>String</span>, <span class='ident'>age</span>: <span class='ident'>uint</span> }
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>john</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
+    
+    <span class='ident'>grow_older</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>john</span>);
+    
+    <span class='ident'>show</span>(<span class='kw-2'>&amp;</span><span class='ident'>john</span>); <span class='comment'>// John is 43</span>
+}
+
+<span class='kw'>fn</span> <span class='ident'>grow_older</span>(<span class='ident'>person</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Person</span>) {
+    <span class='ident'>person</span>.<span class='ident'>age</span> <span class='op'>+=</span> <span class='number'>1</span>;
+}
+</pre>
+
+<h1 id="mutable-borrow-1" class='section-header'><a
+                           href="#mutable-borrow-1">Mutable borrow</a></h1>
+<p>The following will compile too, as <code>grow_older</code> gives us <code>john</code> back:</p>
+<pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>john</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
+    <span class='ident'>show</span>(<span class='kw-2'>&amp;</span><span class='ident'>john</span>); <span class='comment'>// John is 42</span>
+    <span class='ident'>grow_older</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>john</span>);
+    <span class='ident'>grow_older</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>john</span>);
+    <span class='ident'>show</span>(<span class='kw-2'>&amp;</span><span class='ident'>john</span>); <span class='comment'>// John is 44</span>
+}
+</pre>
+
+<h1 id="mutable-borrow-2" class='section-header'><a
+                           href="#mutable-borrow-2">Mutable borrow</a></h1>
+<p>But this won&#39;t:</p>
+<pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>john</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
+
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>john_bis</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>john</span>;
+
+    <span class='ident'>grow_older</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>john</span>);
+    
+    <span class='ident'>show</span>(<span class='kw-2'>&amp;</span><span class='ident'>john</span>);
+}
+</pre>
+
+<h1 id="mutable-borrow-3" class='section-header'><a
+                           href="#mutable-borrow-3">Mutable borrow</a></h1>
+<pre><code class="language-norust">error: cannot borrow `john` as mutable more than once at a time
+    grow_older(&amp;mut john);
+                    ^
+note: previous borrow of `john` occurs here; the mutable borrow prevents subsequent moves, borrows, or modification of `p` until the borrow ends
+    let mut john_bis = &amp;mut john;
+                         ^
+note: previous borrow ends here
+fn main() {
+...
+}
+^
+error: aborting due to previous error
+</code></pre>
+
+<h1 id="mutable-borrow-4" class='section-header'><a
+                           href="#mutable-borrow-4">Mutable borrow</a></h1><pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>john</span> <span class='op'>=</span> <span class='ident'>Person</span> { <span class='ident'>name</span>: <span class='string'>&quot;John&quot;</span>.<span class='ident'>to_string</span>(), <span class='ident'>age</span>: <span class='number'>42</span> };
+
+    <span class='comment'>// first borrow of `john` as mutable</span>
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>john_bis</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>john</span>;
+
+    <span class='comment'>// `john` cannot be mutably borrowed again, won&#39;t compile</span>
+    <span class='ident'>grow_older</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>john</span>);
+    
+    <span class='ident'>show</span>(<span class='kw-2'>&amp;</span><span class='ident'>john</span>);
+}
+</pre>
+
 <h1 id="net-result" class='section-header'><a
                            href="#net-result">Net result</a></h1>
 <ul>
