@@ -1231,12 +1231,48 @@ This shape has an area of 6.0</p>
 <p>If <code>get_name()</code> returns <code>Some(&quot;Marie&quot;)</code>, this will print <code>My name is Marie</code>, and if it returns <code>None</code>, this will print <code>I don&#39;t have a name</code>.</p>
 
 <h1 id="iterators" class='section-header'><a
-                           href="#iterators">Iterators</a></h1>
+                           href="#iterators">Iterators</a></h1><pre class='rust '>
+<span class='kw'>for</span> <span class='ident'>x</span> <span class='kw'>in</span> <span class='ident'>range</span>(<span class='number'>0i</span>, <span class='number'>10i</span>) {
+    <span class='comment'>// do stuff</span>
+}
+</pre>
+
+<p>This works because <code>range(0, 10)</code> returns an <code>Iterator&lt;int&gt;</code>.</p>
+
+<p><code>Iterator&lt;T&gt;</code> provides a <code>next()</code> function that we can call repeatedly to get a sequence of values, each wrapped in <code>Some</code>. When no more values are available, <code>next()</code> returns <code>None</code>.</p>
+
+<h1 id="iterators-1" class='section-header'><a
+                           href="#iterators-1">Iterators</a></h1>
+<p>The <code>for</code> loop on the previous slide can be written like this:</p>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>range</span> <span class='op'>=</span> <span class='ident'>range</span>(<span class='number'>0i</span>, <span class='number'>10i</span>);
+
+<span class='kw'>loop</span> {
+    <span class='kw'>match</span> <span class='ident'>range</span>.<span class='ident'>next</span>() {
+        <span class='prelude-val'>Some</span>(<span class='ident'>x</span>) <span class='op'>=&gt;</span> {
+            <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>x</span>);
+        },
+        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> { <span class='kw'>break</span> }
+    }
+}
+</pre>
+
+<h1 id="iterators-2" class='section-header'><a
+                           href="#iterators-2">Iterators</a></h1>
+<p>Vectors can be iterated over too. <code>Vec&lt;T&gt;</code> provides an <code>iter()</code> method which returns an <code>Iterator&lt;&amp;T&gt;</code> that we can use to iterate over the elements.</p>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>nums</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1i</span>, <span class='number'>2i</span>, <span class='number'>3i</span>];
+
+<span class='kw'>for</span> <span class='ident'>num</span> <span class='kw'>in</span> <span class='ident'>nums</span>.<span class='ident'>iter</span>() {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>num</span>);
+}
+</pre>
+
 <p>TODO</p>
 
 <h1 id="macros" class='section-header'><a
                            href="#macros">Macros</a></h1>
-<p>TODO</p>
+<p>Available, but won&#39;t be covered today.</p>
 
 <h1 id="modules" class='section-header'><a
                            href="#modules">Modules</a></h1>

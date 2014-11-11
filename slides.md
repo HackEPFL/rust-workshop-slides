@@ -1201,11 +1201,50 @@ If `get_name()` returns `Some("Marie")`, this will print `My name is Marie`, and
 
 # Iterators
 
+```rust
+for x in range(0i, 10i) {
+    // do stuff
+}
+```
+
+This works because `range(0, 10)` returns an `Iterator<int>`.
+
+`Iterator<T>` provides a `next()` function that we can call repeatedly to get a sequence of values, each wrapped in `Some`. When no more values are available, `next()` returns `None`.
+
+# Iterators
+
+The `for` loop on the previous slide can be written like this:
+
+```rust
+let mut range = range(0i, 10i);
+
+loop {
+    match range.next() {
+        Some(x) => {
+            println!("{}", x);
+        },
+        None => { break }
+    }
+}
+```
+
+# Iterators
+
+Vectors can be iterated over too. `Vec<T>` provides an `iter()` method which returns an `Iterator<&T>` that we can use to iterate over the elements.
+
+```rust
+let nums = vec![1i, 2i, 3i];
+
+for num in nums.iter() {
+    println!("{}", num);
+}
+```
+
 TODO
 
 # Macros
 
-TODO
+Available, but won't be covered today.
 
 # Modules
 
