@@ -219,8 +219,14 @@ x = x + 1; // ok
 # Mutability
 
 ```rust
-let mut x = 5i;
-let y = x; // ok
+let x = 5i;
+let mut y = x;
+
+println!("x = {}, y = {}", x, y); // => x = 5, y = 5
+
+y = 6i;
+
+println!("x = {}, y = {}", x, y); // => x = 5, y = 6
 ```
 
 # Functions
