@@ -353,7 +353,7 @@ for var in expression {
 # Strings
 
 * String slices
-* Growable strings
+* Growable strings (`String`)
 
 TODO
 
@@ -389,7 +389,7 @@ fn apply(x: int, adder: |int| -> int) -> int {
     let factor = 8;
     let xs = vec!(1i, 2i, 3i);
     let ys = xs.map(|x| x * factor);
-
+    
     // ys == [8i, 16i, 24i]
 ```
 
@@ -515,7 +515,7 @@ fn main() {
 }
 ```
 
-> This shape has an area of 3.141592654
+> This shape has an area of 3.141592654  
 > This shape has an area of 6.0
 
 # Traits
