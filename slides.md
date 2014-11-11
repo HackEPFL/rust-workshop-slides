@@ -362,7 +362,7 @@ TODO
 
 # Higher-order functions
 
-Not really, since can't return closures from a function.
+http://stackoverflow.com/questions/25445761/returning-a-closure-from-a-function
 
 ```rust
 fn add_one(x: int) -> int {
@@ -437,10 +437,10 @@ fn main() {
 }
 ```
 
-# Iterators
 # Algebraic data types
 # Pattern matching
 # Traits (= type classes)
+# Iterators
 # Macros
 
 # Low-level control
