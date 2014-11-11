@@ -250,7 +250,7 @@ fn main() {
 
 fn do_stuff(a: int, b: int) -> int {
     let c = a + b;
-    
+
     c * 2 // ! no semicolon
 }
 ```
@@ -405,13 +405,27 @@ struct Rectangle {
 }
 ```
 
+# Static methods
+
+```rust
+struct Rectangle { width: f32, height: f32 }
+
+impl Rectangle {
+    fn new(width: f32, height: f32) -> Rectangle {
+        Rectangle { width: width, height: height }
+    }
+}
+
+fn main() {
+    let rect = Rectangle::new(1.2, 4.9);
+    println!("{}", react.area());
+}
+```
+
 # Member methods
 
 ```rust
-struct Rectangle {
-    width: f32,
-    height: f32
-}
+struct Rectangle { width: f32, height: f32 }
 
 impl Rectangle {
     fn area(&self) -> f32 {
@@ -428,29 +442,82 @@ fn main() {
 }
 ```
 
-# Static methods
+# Traits
 
 ```rust
-struct Rectangle {
-    width: f32,
-    height: f32
+struct Rectangle { width: f32, height: f32 }
+
+trait HasArea {
+    fn area(&self) -> f32;
 }
 
-impl Rectangle {
-    fn new(width: f32, height: f32) -> Rectangle {
-        Rectangle { width: width, height: height }
+impl HasArea for Rectangle {
+    fn area(&self) -> f32 {
+        self.width * self.height
     }
+}
+```
+
+# Traits
+
+```rust
+fn main() {
+    let rect = Rectangle {
+        width: 1.2,
+        height: 4.9
+    };
+    println!("{}", react.area());
+}
+```
+
+# Traits
+
+```rust
+struct Circle { radius: f32 }
+
+impl HasArea for Circle {
+    fn area(&self) -> f32 {
+         std::f32::consts::PI * (self.radius * self.radius)
+    }
+}
+```
+
+# Traits
+
+```rust
+fn print_area<T>(shape: T) {
+    println!("This shape has an area of {}", shape.area());
+}
+```
+
+> error: type `T` does not implement any method in scope named `area`
+
+# Traits
+
+```rust
+fn print_area<T: HasArea>(shape: T) {
+    println!("This shape has an area of {}", shape.area());
+}
+```
+
+# Traits
+
+```rust
+fn print_area<T: HasArea>(shape: T) {
+    println!("This shape has an area of {}", shape.area());
 }
 
 fn main() {
-    let rect = Rectangle::new(1.2, 4.9);
-    println!("{}", react.area());
+    let c = Circle { radius: 2.0 }
+    let r = Rectangle { width: 3.0, height: 2.0 }
+
+    print_area(c); // This shape has an area of 12.566370614
+    print_area(r); // This shape has an area of 6.0
 }
 ```
 
 # Algebraic data types
 # Pattern matching
-# Traits (= type classes)
 # Iterators
 # Macros
 
