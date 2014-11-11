@@ -812,6 +812,10 @@ fn main() {
 }
 ```
 
+# Generics
+
+TODO (add to TOC too)
+
 # Traits
 
 * No inheritance in Rust :)
@@ -1039,7 +1043,6 @@ match ordering {
 
 It also works with primitives:
 
-
 ```rust
 let i = 5i;
 
@@ -1076,9 +1079,94 @@ match ordering {
 
 > error: non-exhaustive patterns: `Equal` not covered [E0004]
 
+# Back to enums
+
+Enums can also store data. One simple example is the built-in `Option` type. Here's how it is defined in the standard library:
+
+```rust
+enum Option<T> {
+    None,
+    Some(T),
+}
+```
+
+The type `Option<T>` represents an optional value of type `T`.
+
+An `Option` is either
+
+* `Some`, and contains a value of type `T`
+* `None`, and does not contain anything
+
+# Option
+
+```rust
+let opt: Option<int> = Some(5);
+
+let opt_plus_two = opt + 2;
+```
+
+> error: binary operation `+` cannot be applied to type `core::option::Option<int>`
+
+# Option
+
+To make use of the value inside an `Option`, we must pattern-match on it:
+
+```rust
+let opt: Option<int> = Some(5);
+
+let opt_plus_two = match opt {
+    Some(x) => x + 2,
+    None    => -1
+}
+```
+
+This forces us to handle the case where there might be no value.
+
+# Option
+
+Options have a number of uses in Rust:
+
+* Initial values
+* Return values for functions that are not defined over their entire input range (partial functions)
+* Return value for otherwise reporting simple errors, where None is returned on error
+* Optional struct fields
+* Optional function arguments
+* Nullable pointers
+
+# Option
+
+`Option` also provides a few convenience methods:
+
+* `fn is_some(&self) -> bool`
+* `fn is_none(&self) -> bool`
+* `fn unwrap_or(self, def: T) -> T`
+* `fn unwrap(self) -> T` **Use with caution**
+
+# Option
+
+A couple more:
+
+* `fn map<U>(self, f: |T| -> U) -> Option<U>`
+* `fn and_then<U>(self, f: |T| -> Option<U>) -> Option<U>`
+
+# Option
+
+```rust
+fn get_name() -> Option<String> { /* ... */ }
+
+let name: Option<String> = get_name();
+
+let display_name = name.map(|n| format!("My name is {}", n))
+                       .unwrap_or("I don't have a name");
+
+println!(display_name);
+```
+
+If `get_name()` returns `Some("Marie")`, this will print `My name is Marie`, and if it returns `None`, this will print `I don't have a name`.
+
 # Iterators
 
-TOOD
+TODO
 
 # Macros
 

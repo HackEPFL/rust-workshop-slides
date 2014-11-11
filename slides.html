@@ -833,6 +833,10 @@ error: aborting due to previous error
 }
 </pre>
 
+<h1 id="generics" class='section-header'><a
+                           href="#generics">Generics</a></h1>
+<p>TODO (add to TOC too)</p>
+
 <h1 id="traits" class='section-header'><a
                            href="#traits">Traits</a></h1>
 <ul>
@@ -1097,9 +1101,100 @@ This shape has an area of 6.0</p>
 <p>error: non-exhaustive patterns: <code>Equal</code> not covered [E0004]</p>
 </blockquote>
 
+<h1 id="back-to-enums" class='section-header'><a
+                           href="#back-to-enums">Back to enums</a></h1>
+<p>Enums can also store data. One simple example is the built-in <code>Option</code> type. Here&#39;s how it is defined in the standard library:</p>
+<pre class='rust '>
+<span class='kw'>enum</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='prelude-val'>None</span>,
+    <span class='prelude-val'>Some</span>(<span class='ident'>T</span>),
+}
+</pre>
+
+<p>The type <code>Option&lt;T&gt;</code> represents an optional value of type <code>T</code>.  </p>
+
+<p>An <code>Option</code> is either</p>
+
+<ul>
+<li><code>Some</code>, and contains a value of type <code>T</code></li>
+<li><code>None</code>, and does not contain anything</li>
+</ul>
+
+<h1 id="option" class='section-header'><a
+                           href="#option">Option</a></h1><pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>opt</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>int</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='number'>5</span>);
+
+<span class='kw'>let</span> <span class='ident'>opt_plus_two</span> <span class='op'>=</span> <span class='ident'>opt</span> <span class='op'>+</span> <span class='number'>2</span>;
+</pre>
+
+<blockquote>
+<p>error: binary operation <code>+</code> cannot be applied to type <code>core::option::Option&lt;int&gt;</code></p>
+</blockquote>
+
+<h1 id="option-1" class='section-header'><a
+                           href="#option-1">Option</a></h1>
+<p>To make use of the value inside an <code>Option</code>, we must pattern-match on it:</p>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>opt</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>int</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='number'>5</span>);
+
+<span class='kw'>let</span> <span class='ident'>opt_plus_two</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>opt</span> {
+    <span class='prelude-val'>Some</span>(<span class='ident'>x</span>) <span class='op'>=&gt;</span> <span class='ident'>x</span> <span class='op'>+</span> <span class='number'>2</span>,
+    <span class='prelude-val'>None</span>    <span class='op'>=&gt;</span> <span class='op'>-</span><span class='number'>1</span>
+}
+</pre>
+
+<p>This forces us to handle the case where there might be no value.</p>
+
+<h1 id="option-2" class='section-header'><a
+                           href="#option-2">Option</a></h1>
+<p>Options have a number of uses in Rust:</p>
+
+<ul>
+<li>Initial values</li>
+<li>Return values for functions that are not defined over their entire input range (partial functions)</li>
+<li>Return value for otherwise reporting simple errors, where None is returned on error</li>
+<li>Optional struct fields</li>
+<li>Optional function arguments</li>
+<li>Nullable pointers</li>
+</ul>
+
+<h1 id="option-3" class='section-header'><a
+                           href="#option-3">Option</a></h1>
+<p><code>Option</code> also provides a few convenience methods:</p>
+
+<ul>
+<li><code>fn is_some(&amp;self) -&gt; bool</code></li>
+<li><code>fn is_none(&amp;self) -&gt; bool</code></li>
+<li><code>fn unwrap_or(self, def: T) -&gt; T</code></li>
+<li><code>fn unwrap(self) -&gt; T</code> <strong>Use with caution</strong></li>
+</ul>
+
+<h1 id="option-4" class='section-header'><a
+                           href="#option-4">Option</a></h1>
+<p>A couple more:</p>
+
+<ul>
+<li><code>fn map&lt;U&gt;(self, f: |T| -&gt; U) -&gt; Option&lt;U&gt;</code></li>
+<li><code>fn and_then&lt;U&gt;(self, f: |T| -&gt; Option&lt;U&gt;) -&gt; Option&lt;U&gt;</code></li>
+</ul>
+
+<h1 id="option-5" class='section-header'><a
+                           href="#option-5">Option</a></h1><pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>get_name</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> { <span class='comment'>/* ... */</span> }
+
+<span class='kw'>let</span> <span class='ident'>name</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>get_name</span>();
+
+<span class='kw'>let</span> <span class='ident'>display_name</span> <span class='op'>=</span> <span class='ident'>name</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>n</span><span class='op'>|</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;My name is {}&quot;</span>, <span class='ident'>n</span>))
+                       .<span class='ident'>unwrap_or</span>(<span class='string'>&quot;I don&#39;t have a name&quot;</span>);
+
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='ident'>display_name</span>);
+</pre>
+
+<p>If <code>get_name()</code> returns <code>Some(&quot;Marie&quot;)</code>, this will print <code>My name is Marie</code>, and if it returns <code>None</code>, this will print <code>I don&#39;t have a name</code>.</p>
+
 <h1 id="iterators" class='section-header'><a
                            href="#iterators">Iterators</a></h1>
-<p>TOOD</p>
+<p>TODO</p>
 
 <h1 id="macros" class='section-header'><a
                            href="#macros">Macros</a></h1>
