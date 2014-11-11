@@ -295,13 +295,13 @@ else {
 `if/else` is an expression:
 
 ```rust
-let score = if down {
-    0
+let message = if health > 0 {
+    "Good job"
 } else {
-    score + 1
+    "Game over"
 };
 
-let score = if down { 0 } else { score + 1 };
+println!("{}", message);
 ```
 
 # While
@@ -389,6 +389,7 @@ fn apply(x: int, adder: |int| -> int) -> int {
     let factor = 8;
     let xs = vec!(1i, 2i, 3i);
     let ys = xs.map(|x| x * factor);
+
     // ys == [8i, 16i, 24i]
 ```
 
