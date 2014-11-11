@@ -999,7 +999,7 @@ trait Equiv<T> {
 
 # Enums
 
-* Also called `sum types` in the litterature.
+* Also called `sum types` in the literature.
 * Similar to Haskell's `data` and Scala's `case class`.
 
 ```rust
