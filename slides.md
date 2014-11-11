@@ -640,6 +640,72 @@ if ordering == Less {
 ```
 
 # Pattern matching
+
+Rust provides pattern matching, which lets you rewrite this:
+
+```rust
+if ordering == Less {
+    println!("less");
+} else if ordering == Greater {
+    println!("greater");
+} else if ordering == Equal {
+    println!("equal");
+}
+```
+
+# Pattern matching
+
+into this:
+
+```rust
+match ordering {
+    Less    => println!("less"),
+    Greater => println!("greater"),
+    Equal   => println!("equal")
+}
+```
+
+# Pattern matching
+
+It also works with primitives:
+
+
+```rust
+let i = 5i;
+
+match i {
+    0 => println!("zero"),
+    1 => println!("one"),
+    _ => println!("> 1")
+}
+```
+
+# Pattern matching
+
+Patterns must be exhaustive:
+
+```rust
+match ordering {
+    Less    => println!("less"),
+    Greater => println!("greater")
+}
+```
+
+> error: non-exhaustive patterns: `Equal` not covered [E0004]
+
+# Pattern matching
+
+There's a "catch-all" pattern: `_`.
+
+```rust
+match ordering {
+    Less => println!("less"),
+    _    => println!("not less) 
+}
+```
+
+> error: non-exhaustive patterns: `Equal` not covered [E0004]
+
 # Iterators
 # Macros
 # Modules
