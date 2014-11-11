@@ -548,11 +548,61 @@ Implementing traits for primitive types should generally be avoided.
 
 # Traits
 
-One more restriction:
+One restriction:
 
 > Either the trait or the type you're writing the `impl` for must be inside your crate.
 
-# Algebraic data types
+# Enums
+
+* Also called `sum types` in the litterature.
+* Similar to Haskell's `data` and Scala's `case class`.
+
+```rust
+enum Boolean {
+    True,
+    False
+}
+```
+
+> Rust's `bool` type is **not** implemented this way as it is a primitive.
+
+# Enums
+
+```rust
+enum Boolean {
+    True,
+    False
+}
+
+let b: Boolean = True;
+```
+
+A value of type `Boolean` can be either `True` or `False`.
+
+# Enum
+
+From the standard library (almost):
+
+```rust
+enum Ordering { Less, Equal, Greater }
+
+fn cmp(a: int, b: int) -> Ordering {
+    if      a < b { Less }
+    else if a > b { Greater }
+    else          { Equal }
+}
+
+let ordering = cmp(x, y);
+
+if ordering == Less {
+    println!("less");
+} else if ordering == Greater {
+    println!("greater");
+} else if ordering == Equal {
+    println!("equal");
+}
+```
+
 # Pattern matching
 # Iterators
 # Macros
