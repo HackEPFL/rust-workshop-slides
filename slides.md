@@ -352,10 +352,38 @@ for var in expression {
 
 # Strings
 
-* String slices
-* Growable strings (`String`)
+* Guaranteed to be validly-encoded UTF-8 sequences
+* Not null-terminated (can contain null bytes)
+* Can be constant strings (`&str`) or growable strings (`String`)
 
-TODO
+# String slices (`&str`)
+
+A pointer and a length.
+String slices are a 'view' into already allocated strings like string literals:
+
+```rust
+let hello = "Hello, world!";
+```
+
+# Growable strings (`String`)
+
+```rust
+let mut hello = "Hello".to_string();
+hello.push_str(", world!");
+// s containts "Hello, world!"
+```
+
+# Conversions between `&str` and `String`
+
+* Call `as_slice()` on a `String` to convert it to a `&str`
+* Call `to_string()` on a `&str` to convert it to a `String`
+
+```rust
+let s1: String = "Hello".to_string();
+let s2: &str = s1.as_slice();
+```
+
+Converting `String` to `&str` is cheap, converting `&str` to `String` involves an allocation.
 
 # Arrays, vectors and slices
 

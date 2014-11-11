@@ -368,11 +368,38 @@
 <h1 id="strings" class='section-header'><a
                            href="#strings">Strings</a></h1>
 <ul>
-<li>String slices</li>
-<li>Growable strings (<code>String</code>)</li>
+<li>Guaranteed to be validly-encoded UTF-8 sequences</li>
+<li>Not null-terminated (can contain null bytes)</li>
+<li>Can be constant strings (<code>&amp;str</code>) or growable strings (<code>String</code>)</li>
 </ul>
 
-<p>TODO</p>
+<h1 id="string-slices-(&amp;str)" class='section-header'><a
+                           href="#string-slices-(&amp;str)">String slices (<code>&amp;str</code>)</a></h1>
+<p>A pointer and a length.
+String slices are a &#39;view&#39; into already allocated strings like string literals:</p>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>hello</span> <span class='op'>=</span> <span class='string'>&quot;Hello, world!&quot;</span>;
+</pre>
+
+<h1 id="growable-strings-(string)" class='section-header'><a
+                           href="#growable-strings-(string)">Growable strings (<code>String</code>)</a></h1><pre class='rust '>
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>hello</span> <span class='op'>=</span> <span class='string'>&quot;Hello&quot;</span>.<span class='ident'>to_string</span>();
+<span class='ident'>hello</span>.<span class='ident'>push_str</span>(<span class='string'>&quot;, world!&quot;</span>);
+<span class='comment'>// s containts &quot;Hello, world!&quot;</span>
+</pre>
+
+<h1 id="conversions-between-&amp;str-and-string" class='section-header'><a
+                           href="#conversions-between-&amp;str-and-string">Conversions between <code>&amp;str</code> and <code>String</code></a></h1>
+<ul>
+<li>Call <code>as_slice()</code> on a <code>String</code> to convert it to a <code>&amp;str</code></li>
+<li>Call <code>to_string()</code> on a <code>&amp;str</code> to convert it to a <code>String</code></li>
+</ul>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>s1</span>: <span class='ident'>String</span> <span class='op'>=</span> <span class='string'>&quot;Hello&quot;</span>.<span class='ident'>to_string</span>();
+<span class='kw'>let</span> <span class='ident'>s2</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span> <span class='op'>=</span> <span class='ident'>s1</span>.<span class='ident'>as_slice</span>();
+</pre>
+
+<p>Converting <code>String</code> to <code>&amp;str</code> is cheap, converting <code>&amp;str</code> to <code>String</code> involves an allocation.</p>
 
 <h1 id="arrays,-vectors-and-slices" class='section-header'><a
                            href="#arrays,-vectors-and-slices">Arrays, vectors and slices</a></h1>
