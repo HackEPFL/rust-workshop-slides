@@ -46,7 +46,6 @@ fn main() {
 
 * Type inference
 * Lambdas
-* Higher-order functions
 * Closures
 * Structs and methods
 * Iterators
@@ -372,9 +371,7 @@ TODO
     // ys == [2i, 4i, 6i]
 ```
 
-# Higher-order functions
-
-http://stackoverflow.com/questions/25445761/returning-a-closure-from-a-function
+# Lambdas
 
 ```rust
 fn add_one(x: int) -> int {
