@@ -30,13 +30,13 @@ fn main() {
 * New experimental, highly parallel browser engine: Servo
 * Browsers evolve in a hostile, highly concurrent environment
 * Most security problems arise from memory safetey and concurrency issues
-* Thus needed a safer, saner systems language, with built-in concurrency
+* Thus a safer, saner systems language is needed, with built-in concurrency
 
 # Why Rust, for you?
 
 * High-level features
 * Low-level control
-* Powerful Foreign Function Interface
+* Powerful Foreign Function Interface (FFI)
 * Direct memory control
 * Guaranteed memory safety
 * Concurrency without data races
@@ -58,7 +58,7 @@ fn main() {
 # But first, the basics
 
 * Primitive types
-* Variables bindings
+* Variable bindings
 * Functions
 * Printing stuff
 * Control structures
@@ -190,7 +190,7 @@ fn main() {
     </tr>
 </table>
 
-# Variables bindings
+# Variable bindings
 
 ```rust
 let x = 5i;
@@ -242,7 +242,7 @@ fn do_stuff(a: int, b: int) -> int {
 
 # Functions
 
-You can omit `return` if you want return the last expression.
+You can omit `return` if you want to return the last expression.
 
 ```rust
 fn main() {
@@ -372,7 +372,7 @@ let hello = "Hello, world!";
 ```rust
 let mut hello = "Hello".to_string();
 hello.push_str(", world!");
-// s containts "Hello, world!"
+// hello contains "Hello, world!"
 ```
 
 # Conversions between `&str` and `String`
@@ -429,7 +429,7 @@ let middle = a.slice(1, 4); // just the elements [1, 2, 3]
 # Low-level control
 
 * Ability to trade compiler-enforced safety for lower-level control
-* Eg. dereferencing raw pointer, pointer arithmetic, calling extern code
+* Eg. dereferencing raw pointer, pointer arithmetic, calling external code
 * Such unsafe code must be surrounded by an `unsafe` block
 * Thus easy to spot during code review or when debugging
 
@@ -584,7 +584,7 @@ fn main() {
     // `john` moves into show here
     show(john);
     // `john` is deallocated by now
-    // the next line thus doesn't compile
+    // so the next line doesn't compile
     show(john);
 }
 
@@ -608,7 +608,7 @@ fn main() {
     // `john` moves into `john_bis` here
     let john_bis = john;
     
-    // the next line thus won't compile
+    // so the next line won't compile
     show(john);
 }
 
@@ -623,7 +623,7 @@ fn show(person: Person) {
 
 When you create a resource, you're the **owner** of that resource.
 
-Being an owner affords you some privileges:
+Being an owner gives you some privileges:
 
 * You control when that resource is deallocated.
 * You may lend that resource, **immutably**, to **as many** borrowers as you'd like.
@@ -866,7 +866,7 @@ If a type implements a trait, that means that it supports and implements the beh
 
 You can think of them as (better) Java interfaces. They are in fact very similar to Haskell's typeclasses.
 
-One of the main difference is that you can define a trait implementation separately from the struct definition, even in another module. This means that you can eg. implement a trait you defined yourself for a type provided by a library.
+One of the main differences is that you can define a trait implementation separately from the struct definition, even in another module. This means that you can eg. implement a trait you defined yourself for a type provided by a library.
 
 They're also much more powerful (but won't get into too much detail here).
 
@@ -999,7 +999,7 @@ trait Equiv<T> {
 
 # Enums
 
-* Also called `sum types` in the literature.
+* Also called `sum types` in the litterature.
 * Similar to Haskell's `data` and Scala's `case class`.
 
 ```rust
@@ -1064,7 +1064,7 @@ if ordering == Less {
 
 # Pattern matching
 
-into this:
+as this:
 
 ```rust
 match ordering {
@@ -1201,50 +1201,11 @@ If `get_name()` returns `Some("Marie")`, this will print `My name is Marie`, and
 
 # Iterators
 
-```rust
-for x in range(0i, 10i) {
-    // do stuff
-}
-```
-
-This works because `range(0, 10)` returns an `Iterator<int>`.
-
-`Iterator<T>` provides a `next()` function that we can call repeatedly to get a sequence of values, each wrapped in `Some`. When no more values are available, `next()` returns `None`.
-
-# Iterators
-
-The `for` loop on the previous slide can be written like this:
-
-```rust
-let mut range = range(0i, 10i);
-
-loop {
-    match range.next() {
-        Some(x) => {
-            println!("{}", x);
-        },
-        None => { break }
-    }
-}
-```
-
-# Iterators
-
-Vectors can be iterated over too. `Vec<T>` provides an `iter()` method which returns an `Iterator<&T>` that we can use to iterate over the elements.
-
-```rust
-let nums = vec![1i, 2i, 3i];
-
-for num in nums.iter() {
-    println!("{}", num);
-}
-```
-
 TODO
 
 # Macros
 
-Available, but won't be covered today.
+TODO
 
 # Modules
 
