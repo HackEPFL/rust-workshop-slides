@@ -405,7 +405,45 @@ String slices are a &#39;view&#39; into already allocated strings like string li
 
 <h1 id="arrays,-vectors-and-slices" class='section-header'><a
                            href="#arrays,-vectors-and-slices">Arrays, vectors and slices</a></h1>
-<p>TODO</p>
+<ul>
+<li>An array is a <strong>fixed-sized</strong> list of elements of the same type</li>
+<li>A vector is a <strong>dynamic, growable</strong> array</li>
+<li>A slice is a reference to an array.</li>
+</ul>
+
+<h1 id="arrays" class='section-header'><a
+                           href="#arrays">Arrays</a></h1>
+<blockquote>
+<p>An array is a <strong>fixed-sized</strong> list of elements of the same type</p>
+</blockquote>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> [<span class='number'>1i</span>, <span class='number'>2</span>, <span class='number'>3</span>]; <span class='comment'>// Only the first item needs a type suffix</span>
+
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;a has {} elements&quot;</span>, <span class='ident'>a</span>.<span class='ident'>len</span>());
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;the first element of a is {}&quot;</span>, <span class='ident'>a</span>[<span class='number'>0</span>]);
+</pre>
+
+<h1 id="vectors" class='section-header'><a
+                           href="#vectors">Vectors</a></h1>
+<blockquote>
+<p>A vector is a <strong>dynamic, growable</strong> array</p>
+</blockquote>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>participants</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;Bob&quot;</span>, <span class='string'>&quot;Bill&quot;</span>];
+<span class='ident'>participants</span>.<span class='ident'>push</span>(<span class='string'>&quot;Joe&quot;</span>);
+</pre>
+
+<h1 id="slices" class='section-header'><a
+                           href="#slices">Slices</a></h1>
+<blockquote>
+<p>A slice is a reference to an array.</p>
+</blockquote>
+
+<p>A slice allows safe and efficient access to a portion of an array without copying.</p>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> [<span class='number'>0i</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>4</span>];
+<span class='kw'>let</span> <span class='ident'>middle</span> <span class='op'>=</span> <span class='ident'>a</span>.<span class='ident'>slice</span>(<span class='number'>1</span>, <span class='number'>4</span>); <span class='comment'>// just the elements [1, 2, 3]</span>
+</pre>
 
 <h1 id="low-level-control" class='section-header'><a
                            href="#low-level-control">Low-level control</a></h1>

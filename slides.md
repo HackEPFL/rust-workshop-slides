@@ -389,7 +389,42 @@ Converting `String` to `&str` is cheap, converting `&str` to `String` involves a
 
 # Arrays, vectors and slices
 
-TODO
+* An array is a **fixed-sized** list of elements of the same type
+* A vector is a **dynamic, growable** array
+* A slice is a reference to an array.
+
+# Arrays
+
+> An array is a **fixed-sized** list of elements of the same type
+
+```rust
+let a = [1i, 2, 3]; // Only the first item needs a type suffix
+
+println!("a has {} elements", a.len());
+println!("the first element of a is {}", a[0]);
+```
+
+
+# Vectors
+
+> A vector is a **dynamic, growable** array
+
+```rust
+let mut participants = vec!["Bob", "Bill"];
+participants.push("Joe");
+```
+
+# Slices
+
+> A slice is a reference to an array.
+
+A slice allows safe and efficient access to a portion of an array without copying.
+
+```rust
+let a = [0i, 1, 2, 3, 4];
+let middle = a.slice(1, 4); // just the elements [1, 2, 3]
+```
+
 
 # Low-level control
 
