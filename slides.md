@@ -368,6 +368,7 @@ TODO
 ```rust
     let xs = vec!(1i, 2i, 3i);
     let ys = xs.map(|x| x * 2);
+
     // ys == [2i, 4i, 6i]
 ```
 
@@ -440,6 +441,25 @@ fn main() {
     println!("{}", react.area());
 }
 ```
+
+# Traits
+
+* No inheritance in Rust :)
+* No interfaces either…
+* Instead Rust provides a mechanism called `traits`.
+
+# Traits
+
+A trait is a sort of interface that defines some behavior.
+If a type implements a trait, that means that it supports and implements the behavior the trait describes.
+
+# Traits
+
+You can think of them as (better) Java interfaces. They are in fact very similar to Haskell's typeclasses.
+
+One of the main difference is that you can define a trait implementation separately from the struct definition, even in another module. This means that you can eg. implement a trait you defined yourself for a type provided by a library.
+
+They're also much more powerful (but won't get into too much detail here).
 
 # Traits
 
@@ -551,6 +571,22 @@ Implementing traits for primitive types should generally be avoided.
 One restriction:
 
 > Either the trait or the type you're writing the `impl` for must be inside your crate.
+
+# A few built-in traits
+
+```rust
+trait ToString {
+    fn to_string(&self) -> String;
+}
+
+trait ToJson {
+    fn to_json(&self) -> Json;
+}
+
+trait Equiv<T> {
+    fn equiv(&self, other: &T) -> bool;
+}
+```
 
 # Enums
 

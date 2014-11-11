@@ -384,6 +384,7 @@
                            href="#lambdas">Lambdas</a></h1><pre class='rust '>
     <span class='kw'>let</span> <span class='ident'>xs</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>(<span class='number'>1i</span>, <span class='number'>2i</span>, <span class='number'>3i</span>);
     <span class='kw'>let</span> <span class='ident'>ys</span> <span class='op'>=</span> <span class='ident'>xs</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span> <span class='op'>*</span> <span class='number'>2</span>);
+
     <span class='comment'>// ys == [2i, 4i, 6i]</span>
 </pre>
 
@@ -453,7 +454,28 @@
 </pre>
 
 <h1 id="traits" class='section-header'><a
-                           href="#traits">Traits</a></h1><pre class='rust '>
+                           href="#traits">Traits</a></h1>
+<ul>
+<li>No inheritance in Rust :)</li>
+<li>No interfaces either…</li>
+<li>Instead Rust provides a mechanism called <code>traits</code>.</li>
+</ul>
+
+<h1 id="traits-1" class='section-header'><a
+                           href="#traits-1">Traits</a></h1>
+<p>A trait is a sort of interface that defines some behavior.
+If a type implements a trait, that means that it supports and implements the behavior the trait describes.</p>
+
+<h1 id="traits-2" class='section-header'><a
+                           href="#traits-2">Traits</a></h1>
+<p>You can think of them as (better) Java interfaces. They are in fact very similar to Haskell&#39;s typeclasses.</p>
+
+<p>One of the main difference is that you can define a trait implementation separately from the struct definition, even in another module. This means that you can eg. implement a trait you defined yourself for a type provided by a library.</p>
+
+<p>They&#39;re also much more powerful (but won&#39;t get into too much detail here).</p>
+
+<h1 id="traits-3" class='section-header'><a
+                           href="#traits-3">Traits</a></h1><pre class='rust '>
 <span class='kw'>struct</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span> }
 
 <span class='kw'>trait</span> <span class='ident'>HasArea</span> {
@@ -467,8 +489,8 @@
 }
 </pre>
 
-<h1 id="traits-1" class='section-header'><a
-                           href="#traits-1">Traits</a></h1><pre class='rust '>
+<h1 id="traits-4" class='section-header'><a
+                           href="#traits-4">Traits</a></h1><pre class='rust '>
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
     <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span> {
         <span class='ident'>width</span>: <span class='number'>1.2</span>,
@@ -478,8 +500,8 @@
 }
 </pre>
 
-<h1 id="traits-2" class='section-header'><a
-                           href="#traits-2">Traits</a></h1><pre class='rust '>
+<h1 id="traits-5" class='section-header'><a
+                           href="#traits-5">Traits</a></h1><pre class='rust '>
 <span class='kw'>struct</span> <span class='ident'>Circle</span> { <span class='ident'>radius</span>: <span class='ident'>f32</span> }
 
 <span class='kw'>impl</span> <span class='ident'>HasArea</span> <span class='kw'>for</span> <span class='ident'>Circle</span> {
@@ -489,8 +511,8 @@
 }
 </pre>
 
-<h1 id="traits-3" class='section-header'><a
-                           href="#traits-3">Traits</a></h1><pre class='rust '>
+<h1 id="traits-6" class='section-header'><a
+                           href="#traits-6">Traits</a></h1><pre class='rust '>
 <span class='kw'>fn</span> <span class='ident'>print_area</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>T</span>) {
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;This shape has an area of {}&quot;</span>, <span class='ident'>shape</span>.<span class='ident'>area</span>());
 }
@@ -500,15 +522,15 @@
 <p>error: type <code>T</code> does not implement any method in scope named <code>area</code></p>
 </blockquote>
 
-<h1 id="traits-4" class='section-header'><a
-                           href="#traits-4">Traits</a></h1><pre class='rust '>
+<h1 id="traits-7" class='section-header'><a
+                           href="#traits-7">Traits</a></h1><pre class='rust '>
 <span class='kw'>fn</span> <span class='ident'>print_area</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>HasArea</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>T</span>) {
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;This shape has an area of {}&quot;</span>, <span class='ident'>shape</span>.<span class='ident'>area</span>());
 }
 </pre>
 
-<h1 id="traits-5" class='section-header'><a
-                           href="#traits-5">Traits</a></h1><pre class='rust '>
+<h1 id="traits-8" class='section-header'><a
+                           href="#traits-8">Traits</a></h1><pre class='rust '>
 <span class='kw'>fn</span> <span class='ident'>print_area</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>HasArea</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>T</span>) {
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;This shape has an area of {}&quot;</span>, <span class='ident'>shape</span>.<span class='ident'>area</span>());
 }
@@ -527,8 +549,8 @@
 This shape has an area of 6.0</p>
 </blockquote>
 
-<h1 id="traits-6" class='section-header'><a
-                           href="#traits-6">Traits</a></h1><pre class='rust '>
+<h1 id="traits-9" class='section-header'><a
+                           href="#traits-9">Traits</a></h1><pre class='rust '>
 <span class='ident'>print_area</span>(<span class='number'>10i</span>);
 </pre>
 
@@ -536,8 +558,8 @@ This shape has an area of 6.0</p>
 <p>error: failed to find an implementation of trait <code>main::HasArea</code> for <code>int</code></p>
 </blockquote>
 
-<h1 id="traits-7" class='section-header'><a
-                           href="#traits-7">Traits</a></h1>
+<h1 id="traits-10" class='section-header'><a
+                           href="#traits-10">Traits</a></h1>
 <p>We can implement traits for any type. So this would work, even if it makes no sense:</p>
 <pre class='rust '>
 <span class='kw'>impl</span> <span class='ident'>HasArea</span> <span class='kw'>for</span> <span class='ident'>int</span> {
@@ -555,13 +577,28 @@ This shape has an area of 6.0</p>
 
 <p>Implementing traits for primitive types should generally be avoided.</p>
 
-<h1 id="traits-8" class='section-header'><a
-                           href="#traits-8">Traits</a></h1>
+<h1 id="traits-11" class='section-header'><a
+                           href="#traits-11">Traits</a></h1>
 <p>One restriction:</p>
 
 <blockquote>
 <p>Either the trait or the type you&#39;re writing the <code>impl</code> for must be inside your crate.</p>
 </blockquote>
+
+<h1 id="a-few-built-in-traits" class='section-header'><a
+                           href="#a-few-built-in-traits">A few built-in traits</a></h1><pre class='rust '>
+<span class='kw'>trait</span> <span class='ident'>ToString</span> {
+    <span class='kw'>fn</span> <span class='ident'>to_string</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span>;
+}
+
+<span class='kw'>trait</span> <span class='ident'>ToJson</span> {
+    <span class='kw'>fn</span> <span class='ident'>to_json</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Json</span>;
+}
+
+<span class='kw'>trait</span> <span class='ident'>Equiv</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>equiv</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+}
+</pre>
 
 <h1 id="enums" class='section-header'><a
                            href="#enums">Enums</a></h1>
