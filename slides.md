@@ -205,7 +205,7 @@ y += 1;
 ```rust
 let x = 5i;
 
-x = x + 1;      // error
+x = x + 1; // error
 ```
 
 # Mutability
@@ -213,14 +213,14 @@ x = x + 1;      // error
 ```rust
 let mut x = 5i;
 
-x = x + 1;      // ok
+x = x + 1; // ok
 ```
 
 # Mutability
 
 ```rust
-let x = 5i;
-let mut y = x;  // error
+let mut x = 5i;
+let y = x; // ok
 ```
 
 # Mutability
