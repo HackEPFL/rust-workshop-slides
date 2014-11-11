@@ -54,6 +54,7 @@ fn main() {
 * Pattern matching
 * Traits (= type classes)
 * Macros
+* Modules
 
 # But first, the basics
 
@@ -557,6 +558,7 @@ One more restriction:
 # Pattern matching
 # Iterators
 # Macros
+# Modules
 
 # Low-level control
 
