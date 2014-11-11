@@ -24,8 +24,13 @@ section.current {
 
 section.title-slide {
     text-align: center;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 150%;
+}
+
+section:not(.title-slide) > h1 {
+  background: url(img/rust.svg) no-repeat top right;
+  background-size: 85px;
 }
 
 code.language-text {
