@@ -399,6 +399,55 @@
 
 <h1 id="structs-and-methods" class='section-header'><a
                            href="#structs-and-methods">Structs and methods</a></h1>
+<h1 id="structs" class='section-header'><a
+                           href="#structs">Structs</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Rectangle</span> {
+    <span class='ident'>width</span>: <span class='ident'>f32</span>,
+    <span class='ident'>height</span>: <span class='ident'>f32</span>
+}
+</pre>
+
+<h1 id="member-methods" class='section-header'><a
+                           href="#member-methods">Member methods</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Rectangle</span> {
+    <span class='ident'>width</span>: <span class='ident'>f32</span>,
+    <span class='ident'>height</span>: <span class='ident'>f32</span>
+}
+
+<span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
+    <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='self'>self</span>.<span class='ident'>width</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>height</span>   
+    }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span> {
+        <span class='ident'>width</span>: <span class='number'>1.2</span>,
+        <span class='ident'>height</span>: <span class='number'>4.9</span>
+    };
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>react</span>.<span class='ident'>area</span>());
+}
+</pre>
+
+<h1 id="static-methods" class='section-header'><a
+                           href="#static-methods">Static methods</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Rectangle</span> {
+    <span class='ident'>width</span>: <span class='ident'>f32</span>,
+    <span class='ident'>height</span>: <span class='ident'>f32</span>
+}
+
+<span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
+    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Rectangle</span> {
+        <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>width</span>, <span class='ident'>height</span>: <span class='ident'>height</span> }
+    }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span>::<span class='ident'>new</span>(<span class='number'>1.2</span>, <span class='number'>4.9</span>);
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>react</span>.<span class='ident'>area</span>());
+}
+</pre>
+
 <h1 id="iterators" class='section-header'><a
                            href="#iterators">Iterators</a></h1>
 <h1 id="algebraic-data-types" class='section-header'><a

@@ -384,6 +384,59 @@ fn apply(x: int, adder: |int| -> int) -> int {
 ```
 
 # Structs and methods
+
+# Structs
+
+```rust
+struct Rectangle {
+    width: f32,
+    height: f32
+}
+```
+
+# Member methods
+
+```rust
+struct Rectangle {
+    width: f32,
+    height: f32
+}
+
+impl Rectangle {
+    fn area(&self) -> f32 {
+        self.width * self.height   
+    }
+}
+
+fn main() {
+    let rect = Rectangle {
+        width: 1.2,
+        height: 4.9
+    };
+    println!("{}", react.area());
+}
+```
+
+# Static methods
+
+```rust
+struct Rectangle {
+    width: f32,
+    height: f32
+}
+
+impl Rectangle {
+    fn new(width: f32, height: f32) -> Rectangle {
+        Rectangle { width: width, height: height }
+    }
+}
+
+fn main() {
+    let rect = Rectangle::new(1.2, 4.9);
+    println!("{}", react.area());
+}
+```
+
 # Iterators
 # Algebraic data types
 # Pattern matching
