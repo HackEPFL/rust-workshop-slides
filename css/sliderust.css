@@ -3,7 +3,7 @@ body {
 }
 
 h1 {
-    font-size: 70px;
+    font-size: 60px;
 }
 
 body, h5 {
@@ -29,8 +29,8 @@ section.title-slide {
 }
 
 section:not(.title-slide) > h1 {
-  background: url(img/rust.svg) no-repeat top right;
-  background-size: 85px;
+  background: url(../img/rust.svg) no-repeat top right;
+  background-size: 75px;
 }
 
 code.language-text {
@@ -48,6 +48,10 @@ pre, code {
 
 ul {
     list-style: none;
+}
+
+li {
+  margin-bottom: 10px;
 }
 
 li::before {
