@@ -897,7 +897,8 @@ error: aborting due to previous error
 
 ```rust
 fn main() {
-    let mut john = Person { name: "John".to_string(), age: 42 };
+    let mut john = Person { name: "John".to_string(),
+                            age: 42 };
 
     // first borrow of `john` as mutable
     let mut john_bis = &mut john;
