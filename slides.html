@@ -74,7 +74,6 @@
 <li>Type inference</li>
 <li>Lambdas</li>
 <li>Closures</li>
-<li>Structs and methods</li>
 <li>Iterators</li>
 <li>Algebraic data types</li>
 <li>Pattern matching</li>
@@ -93,6 +92,7 @@
 <li>Control structures</li>
 <li>Strings</li>
 <li>Arrays, vectors and slices</li>
+<li>Structs and methods</li>
 </ul>
 
 <h1 id="numeric-types" class='section-header'><a
@@ -102,35 +102,29 @@
         <th>Name</th>
         <th>Type</th>
         <th>Example</th>
-        <th></th>
     </tr>
     <tr>
         <td>Signed integer</td>
         <td><code>int</code></td>
         <td><code>5i</code></td>
-        <td></td>
     </tr>
     <tr>
         <td>Unsigned integer</td>
         <td><code>uint</code></td>
         <td><code>5u</code></td>
-        <td></td>
     </tr>
     <tr>
         <td>8-bit uint</td>
         <td><code>u8</code></td>
         <td><code>5u8</code></td>
-        <td></td>
     </tr>
     <tr>
         <td>16-bit uint</td>
         <td><code>u16</code></td>
         <td><code>5i</code></td>
-        <td></td>
     </tr>
     <tr>
         <td>etc.</td>
-        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -138,13 +132,11 @@
         <td>32-bit float</td>
         <td><code>f32</code></td>
         <td><code>3.14f32</code></td>
-        <td></td>
     </tr>
     <tr>
         <td>64-bit float</td>
         <td><code>f64</code></td>
         <td><code>3.14_f64</code></td>
-        <td></td>
     </tr>
 </table>
 
@@ -215,15 +207,17 @@
         <td>Unicode string</td>
         <td><code>str</code></td>
         <td><code>"rust is cool"</code></td>
-        <td>array 8-bit unsigned bytes<br>
+        <td>array of 8-bit unsigned bytes<br>
             ~ sequence of UTF-8 codepoints</td>
     </tr>
 </table>
 
 <h1 id="variable-bindings" class='section-header'><a
                            href="#variable-bindings">Variable bindings</a></h1><pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>x</span>: <span class='ident'>int</span> <span class='op'>=</span> <span class='number'>5</span>;
+
+<span class='comment'>// type annotations are (usually) optional</span>
 <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
-<span class='kw'>let</span> <span class='ident'>x</span>: <span class='ident'>int</span> <span class='op'>=</span> <span class='number'>5i</span>;
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='number'>2i</span>;
 <span class='ident'>y</span> <span class='op'>+=</span> <span class='number'>1</span>;
@@ -293,8 +287,14 @@
 }
 </pre>
 
+<blockquote>
+<p><code>println!()</code> is actually a macro, not a function.</p>
+</blockquote>
+
 <h1 id="printing-stuff-1" class='section-header'><a
-                           href="#printing-stuff-1">Printing stuff</a></h1><pre class='rust '>
+                           href="#printing-stuff-1">Printing stuff</a></h1>
+<p>You can re-order arguments by putting their index inside the braces.</p>
+<pre class='rust '>
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
     <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='string'>&quot;John&quot;</span>;
     <span class='kw'>let</span> <span class='ident'>age</span> <span class='op'>=</span> <span class='number'>42</span>;
@@ -312,6 +312,10 @@
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Sorry, no beer for you.&quot;</span>);
 }
 </pre>
+
+<blockquote>
+<p>No parenthesis around the condition.</p>
+</blockquote>
 
 <h1 id="conditionals-1" class='section-header'><a
                            href="#conditionals-1">Conditionals</a></h1>
@@ -349,7 +353,9 @@
 }
 </pre>
 
+<blockquote>
 <p>Rust&#39;s control-flow analysis treats this construct differently than a <code>while true</code>, which leads to better generated code.</p>
+</blockquote>
 
 <h1 id="for" class='section-header'><a
                            href="#for">For</a></h1><pre class='rust '>
@@ -365,7 +371,9 @@
 }
 </pre>
 
+<blockquote>
 <p><code>expression</code> must be an <code>Iterator</code> (we&#39;ll talk about it later).</p>
+</blockquote>
 
 <h1 id="strings" class='section-header'><a
                            href="#strings">Strings</a></h1>
@@ -384,14 +392,18 @@ String slices are a &#39;view&#39; into already allocated strings like string li
 </pre>
 
 <h1 id="growable-strings-(string)" class='section-header'><a
-                           href="#growable-strings-(string)">Growable strings (<code>String</code>)</a></h1><pre class='rust '>
+                           href="#growable-strings-(string)">Growable strings (<code>String</code>)</a></h1>
+<p><code>String</code> can grow if defined as <code>mut</code>able.</p>
+<pre class='rust '>
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>hello</span> <span class='op'>=</span> <span class='string'>&quot;Hello&quot;</span>.<span class='ident'>to_string</span>();
+
 <span class='ident'>hello</span>.<span class='ident'>push_str</span>(<span class='string'>&quot;, world!&quot;</span>);
-<span class='comment'>// hello contains &quot;Hello, world!&quot;</span>
+
+<span class='comment'>// hello now contains &quot;Hello, world!&quot;</span>
 </pre>
 
-<h1 id="conversions-between-&amp;str-and-string" class='section-header'><a
-                           href="#conversions-between-&amp;str-and-string">Conversions between <code>&amp;str</code> and <code>String</code></a></h1>
+<h1 id="conversions-between-the-two" class='section-header'><a
+                           href="#conversions-between-the-two">Conversions between the two</a></h1>
 <ul>
 <li>Call <code>as_slice()</code> on a <code>String</code> to convert it to a <code>&amp;str</code></li>
 <li>Call <code>to_string()</code> on a <code>&amp;str</code> to convert it to a <code>String</code></li>
@@ -413,11 +425,13 @@ String slices are a &#39;view&#39; into already allocated strings like string li
 
 <h1 id="arrays" class='section-header'><a
                            href="#arrays">Arrays</a></h1>
-<blockquote>
-<p>An array is a <strong>fixed-sized</strong> list of elements of the same type</p>
-</blockquote>
+<p>An array is a <strong>fixed-sized</strong> list of elements of the same type.</p>
 <pre class='rust '>
-<span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> [<span class='number'>1i</span>, <span class='number'>2</span>, <span class='number'>3</span>]; <span class='comment'>// Only the first item needs a type suffix</span>
+<span class='comment'>// Only the first item needs a type suffix</span>
+<span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> [<span class='number'>1i</span>, <span class='number'>2</span>, <span class='number'>3</span>];
+
+<span class='comment'>// which you can omit if you specify the type</span>
+<span class='kw'>let</span> <span class='ident'>a</span>: [<span class='ident'>int</span>, ..<span class='number'>3</span>] <span class='op'>=</span> [<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>];
 
 <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;a has {} elements&quot;</span>, <span class='ident'>a</span>.<span class='ident'>len</span>());
 <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;the first element of a is {}&quot;</span>, <span class='ident'>a</span>[<span class='number'>0</span>]);
@@ -425,25 +439,76 @@ String slices are a &#39;view&#39; into already allocated strings like string li
 
 <h1 id="vectors" class='section-header'><a
                            href="#vectors">Vectors</a></h1>
-<blockquote>
 <p>A vector is a <strong>dynamic, growable</strong> array</p>
-</blockquote>
 <pre class='rust '>
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>participants</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;Bob&quot;</span>, <span class='string'>&quot;Bill&quot;</span>];
+
 <span class='ident'>participants</span>.<span class='ident'>push</span>(<span class='string'>&quot;Joe&quot;</span>);
+
+<span class='comment'>// participants[2] == &quot;Joe&quot;;</span>
 </pre>
 
 <h1 id="slices" class='section-header'><a
                            href="#slices">Slices</a></h1>
-<blockquote>
 <p>A slice is a reference to an array.</p>
-</blockquote>
 
 <p>A slice allows safe and efficient access to a portion of an array without copying.</p>
 <pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>a</span>: [<span class='ident'>int</span>, ..<span class='number'>5</span>] <span class='op'>=</span> [<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>4</span>];
+<span class='kw'>let</span> <span class='ident'>middle</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>int</span>] <span class='op'>=</span> <span class='ident'>a</span>.<span class='ident'>slice</span>(<span class='number'>1</span>, <span class='number'>4</span>); <span class='comment'>// just the elements [1, 2, 3]</span>
+
 <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> [<span class='number'>0i</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>4</span>];
 <span class='kw'>let</span> <span class='ident'>middle</span> <span class='op'>=</span> <span class='ident'>a</span>.<span class='ident'>slice</span>(<span class='number'>1</span>, <span class='number'>4</span>); <span class='comment'>// just the elements [1, 2, 3]</span>
 </pre>
+
+<h1 id="structs-and-methods" class='section-header'><a
+                           href="#structs-and-methods">Structs and methods</a></h1>
+<h1 id="structs" class='section-header'><a
+                           href="#structs">Structs</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Rectangle</span> {
+    <span class='ident'>width</span>: <span class='ident'>f32</span>,
+    <span class='ident'>height</span>: <span class='ident'>f32</span>
+}
+</pre>
+
+<h1 id="static-methods" class='section-header'><a
+                           href="#static-methods">Static methods</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span> }
+
+<span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
+    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Rectangle</span> {
+        <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>width</span>, <span class='ident'>height</span>: <span class='ident'>height</span> }
+    }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span>::<span class='ident'>new</span>(<span class='number'>1.2</span>, <span class='number'>4.9</span>);
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>react</span>.<span class='ident'>area</span>());
+}
+</pre>
+
+<h1 id="member-methods" class='section-header'><a
+                           href="#member-methods">Member methods</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span> }
+
+<span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
+    <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='self'>self</span>.<span class='ident'>width</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>height</span>
+    }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span> {
+        <span class='ident'>width</span>: <span class='number'>1.2</span>,
+        <span class='ident'>height</span>: <span class='number'>4.9</span>
+    };
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>react</span>.<span class='ident'>area</span>());
+}
+</pre>
+
+<h1 id="putting-everything-together" class='section-header'><a
+                           href="#putting-everything-together">Putting everything together</a></h1>
+<p>TODO</p>
 
 <h1 id="low-level-control" class='section-header'><a
                            href="#low-level-control">Low-level control</a></h1>
@@ -467,8 +532,11 @@ String slices are a &#39;view&#39; into already allocated strings like string li
 <li>No garbage collector</li>
 <li>No runtime overhead</li>
 <li>No unpredictable pauses in execution</li>
-<li>TODO: Stack VS Heap</li>
 </ul>
+
+<h1 id="stack-vs-heap" class='section-header'><a
+                           href="#stack-vs-heap">Stack vs Heap</a></h1>
+<p>TODO</p>
 
 <h1 id="guaranteed-memory-safety" class='section-header'><a
                            href="#guaranteed-memory-safety">Guaranteed memory safety</a></h1>
@@ -824,51 +892,6 @@ error: aborting due to previous error
     <span class='kw'>let</span> <span class='ident'>ys</span> <span class='op'>=</span> <span class='ident'>xs</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span> <span class='op'>*</span> <span class='ident'>factor</span>);
     
     <span class='comment'>// ys == [8i, 16i, 24i]</span>
-</pre>
-
-<h1 id="structs-and-methods" class='section-header'><a
-                           href="#structs-and-methods">Structs and methods</a></h1>
-<h1 id="structs" class='section-header'><a
-                           href="#structs">Structs</a></h1><pre class='rust '>
-<span class='kw'>struct</span> <span class='ident'>Rectangle</span> {
-    <span class='ident'>width</span>: <span class='ident'>f32</span>,
-    <span class='ident'>height</span>: <span class='ident'>f32</span>
-}
-</pre>
-
-<h1 id="static-methods" class='section-header'><a
-                           href="#static-methods">Static methods</a></h1><pre class='rust '>
-<span class='kw'>struct</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span> }
-
-<span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
-    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Rectangle</span> {
-        <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>width</span>, <span class='ident'>height</span>: <span class='ident'>height</span> }
-    }
-}
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span>::<span class='ident'>new</span>(<span class='number'>1.2</span>, <span class='number'>4.9</span>);
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>react</span>.<span class='ident'>area</span>());
-}
-</pre>
-
-<h1 id="member-methods" class='section-header'><a
-                           href="#member-methods">Member methods</a></h1><pre class='rust '>
-<span class='kw'>struct</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span> }
-
-<span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
-    <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
-        <span class='self'>self</span>.<span class='ident'>width</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>height</span>   
-    }
-}
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span> {
-        <span class='ident'>width</span>: <span class='number'>1.2</span>,
-        <span class='ident'>height</span>: <span class='number'>4.9</span>
-    };
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>react</span>.<span class='ident'>area</span>());
-}
 </pre>
 
 <h1 id="generics" class='section-header'><a
