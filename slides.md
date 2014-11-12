@@ -526,10 +526,65 @@ TODO
 * No garbage collector
 * No runtime overhead
 * No unpredictable pauses in execution
+* Stack and heap allocations
 
-# Stack vs Heap
+# Stack and heap allocations
 
-TODO
+By default, values are allocated on the stack.
+
+```rust
+let rect = Rectangle {
+    width: 1.0,
+    height: 1.0
+};
+```
+
+> `rect` is of type `Rectangle`
+
+# Stack and heap allocations
+
+You can allocate a value on the heap with the `box` keyword.
+
+# Stack and heap allocations
+
+```rust
+{
+    let x = box 5i;
+    println!("{}", *x); // Prints 5
+}
+```
+
+```
+{
+    int *x = (int *)malloc(sizeof(int));
+    if (!x) abort();
+    *x = 5;
+    printf("%d\n", *x);
+    free(x);
+}
+```
+
+# Boxes
+
+```rust
+let rect = box Rectangle {
+    width: 1.0,
+    height: 1.0
+};
+```
+
+> `rect` is now type `Box<Rectangle>`
+
+# Boxes
+
+Although it's of type `Box<Rectangle>`, you can still call `Rectangle` methods on `rect`.
+
+```rust
+let rect = box Rectangle::new(1.0, 1.0);
+let area = rect.area();
+
+println!("area = {}", area);
+```
 
 # Guaranteed memory safety
 

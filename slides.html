@@ -549,11 +549,65 @@ String slices are a &#39;view&#39; into already allocated strings like string li
 <li>No garbage collector</li>
 <li>No runtime overhead</li>
 <li>No unpredictable pauses in execution</li>
+<li>Stack and heap allocations</li>
 </ul>
 
-<h1 id="stack-vs-heap" class='section-header'><a
-                           href="#stack-vs-heap">Stack vs Heap</a></h1>
-<p>TODO</p>
+<h1 id="stack-and-heap-allocations" class='section-header'><a
+                           href="#stack-and-heap-allocations">Stack and heap allocations</a></h1>
+<p>By default, values are allocated on the stack.</p>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span> {
+    <span class='ident'>width</span>: <span class='number'>1.0</span>,
+    <span class='ident'>height</span>: <span class='number'>1.0</span>
+};
+</pre>
+
+<blockquote>
+<p><code>rect</code> is of type <code>Rectangle</code></p>
+</blockquote>
+
+<h1 id="stack-and-heap-allocations-1" class='section-header'><a
+                           href="#stack-and-heap-allocations-1">Stack and heap allocations</a></h1>
+<p>You can allocate a value on the heap with the <code>box</code> keyword.</p>
+
+<h1 id="stack-and-heap-allocations-2" class='section-header'><a
+                           href="#stack-and-heap-allocations-2">Stack and heap allocations</a></h1><pre class='rust '>
+{
+    <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='kw'>box</span> <span class='number'>5i</span>;
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='op'>*</span><span class='ident'>x</span>); <span class='comment'>// Prints 5</span>
+}
+</pre>
+<pre class='rust '>
+{
+    <span class='ident'>int</span> <span class='op'>*</span><span class='ident'>x</span> <span class='op'>=</span> (<span class='ident'>int</span> <span class='op'>*</span>)<span class='ident'>malloc</span>(<span class='kw'>sizeof</span>(<span class='ident'>int</span>));
+    <span class='kw'>if</span> (<span class='op'>!</span><span class='ident'>x</span>) <span class='ident'>abort</span>();
+    <span class='op'>*</span><span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5</span>;
+    <span class='ident'>printf</span>(<span class='string'>&quot;%d\n&quot;</span>, <span class='op'>*</span><span class='ident'>x</span>);
+    <span class='ident'>free</span>(<span class='ident'>x</span>);
+}
+</pre>
+
+<h1 id="boxes" class='section-header'><a
+                           href="#boxes">Boxes</a></h1><pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='kw'>box</span> <span class='ident'>Rectangle</span> {
+    <span class='ident'>width</span>: <span class='number'>1.0</span>,
+    <span class='ident'>height</span>: <span class='number'>1.0</span>
+};
+</pre>
+
+<blockquote>
+<p><code>rect</code> is now type <code>Box&lt;Rectangle&gt;</code></p>
+</blockquote>
+
+<h1 id="boxes-1" class='section-header'><a
+                           href="#boxes-1">Boxes</a></h1>
+<p>Although it&#39;s of type <code>Box&lt;Rectangle&gt;</code>, you can still call <code>Rectangle</code> methods on <code>rect</code>.</p>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='kw'>box</span> <span class='ident'>Rectangle</span>::<span class='ident'>new</span>(<span class='number'>1.0</span>, <span class='number'>1.0</span>);
+<span class='kw'>let</span> <span class='ident'>area</span> <span class='op'>=</span> <span class='ident'>rect</span>.<span class='ident'>area</span>();
+
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;area = {}&quot;</span>, <span class='ident'>area</span>);
+</pre>
 
 <h1 id="guaranteed-memory-safety" class='section-header'><a
                            href="#guaranteed-memory-safety">Guaranteed memory safety</a></h1>
