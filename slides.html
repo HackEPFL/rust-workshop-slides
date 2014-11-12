@@ -471,8 +471,24 @@ String slices are a &#39;view&#39; into already allocated strings like string li
 }
 </pre>
 
+<h1 id="methods" class='section-header'><a
+                           href="#methods">Methods</a></h1>
+<p>Methods (static and members) are defined inside an <code>impl</code> block.</p>
+<pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Rectangle</span> {
+    <span class='ident'>width</span>: <span class='ident'>f32</span>,
+    <span class='ident'>height</span>: <span class='ident'>f32</span>
+}
+
+<span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
+    <span class='comment'>// Methods here.</span>
+}
+</pre>
+
 <h1 id="static-methods" class='section-header'><a
-                           href="#static-methods">Static methods</a></h1><pre class='rust '>
+                           href="#static-methods">Static methods</a></h1>
+<p>Static methods are defined this way, and can be called with <code>Type::method_name()</code>.</p>
+<pre class='rust '>
 <span class='kw'>struct</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span> }
 
 <span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
@@ -488,7 +504,9 @@ String slices are a &#39;view&#39; into already allocated strings like string li
 </pre>
 
 <h1 id="member-methods" class='section-header'><a
-                           href="#member-methods">Member methods</a></h1><pre class='rust '>
+                           href="#member-methods">Member methods</a></h1>
+<p>Member methods take a <code>&amp;self</code> parameter, which is a reference to the <code>struct</code> the method is called on.</p>
+<pre class='rust '>
 <span class='kw'>struct</span> <span class='ident'>Rectangle</span> { <span class='ident'>width</span>: <span class='ident'>f32</span>, <span class='ident'>height</span>: <span class='ident'>f32</span> }
 
 <span class='kw'>impl</span> <span class='ident'>Rectangle</span> {
@@ -498,11 +516,10 @@ String slices are a &#39;view&#39; into already allocated strings like string li
 }
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span> {
-        <span class='ident'>width</span>: <span class='number'>1.2</span>,
-        <span class='ident'>height</span>: <span class='number'>4.9</span>
-    };
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>react</span>.<span class='ident'>area</span>());
+    <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Rectangle</span>::<span class='ident'>new</span>(<span class='number'>1.2</span>, <span class='number'>4.9</span>);
+    <span class='kw'>let</span> <span class='ident'>area</span> <span class='op'>=</span> <span class='ident'>react</span>.<span class='ident'>area</span>();
+
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>areas</span>);
 }
 </pre>
 

@@ -449,7 +449,25 @@ struct Rectangle {
 }
 ```
 
+# Methods
+
+Methods (static and members) are defined inside an `impl` block.
+
+```rust
+struct Rectangle {
+    width: f32,
+    height: f32
+}
+
+impl Rectangle {
+    // Methods here.
+}
+
+```
+
 # Static methods
+
+Static methods are defined this way, and can be called with `Type::method_name()`.
 
 ```rust
 struct Rectangle { width: f32, height: f32 }
@@ -468,6 +486,8 @@ fn main() {
 
 # Member methods
 
+Member methods take a `&self` parameter, which is a reference to the `struct` the method is called on.
+
 ```rust
 struct Rectangle { width: f32, height: f32 }
 
@@ -478,11 +498,10 @@ impl Rectangle {
 }
 
 fn main() {
-    let rect = Rectangle {
-        width: 1.2,
-        height: 4.9
-    };
-    println!("{}", react.area());
+    let rect = Rectangle::new(1.2, 4.9);
+    let area = react.area();
+
+    println!("{}", areas);
 }
 ```
 
