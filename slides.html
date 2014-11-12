@@ -34,9 +34,9 @@
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Hello, world!&quot;</span>);
 }
 </pre>
-<pre class='rust '>
-<span class='op'>&gt;</span> <span class='ident'>Hello</span>, <span class='macro'>world</span><span class='macro'>!</span>
-</pre>
+
+<pre><code class="language-norust">&gt; Hello, world!
+</code></pre>
 
 <h1 id="history" class='section-header'><a
                            href="#history">History</a></h1>
@@ -520,6 +520,27 @@ String slices are a &#39;view&#39; into already allocated strings like string li
     <span class='kw'>let</span> <span class='ident'>area</span> <span class='op'>=</span> <span class='ident'>react</span>.<span class='ident'>area</span>();
 
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>area</span>);
+}
+</pre>
+
+<h1 id="generics" class='section-header'><a
+                           href="#generics">Generics</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>PairOfInts</span> { <span class='ident'>first</span>: <span class='ident'>int</span>, <span class='ident'>second</span>: <span class='ident'>int</span> }
+
+<span class='kw'>fn</span> <span class='ident'>swap_pair</span>(<span class='ident'>p</span>: <span class='ident'>PairOfInts</span>) <span class='op'>-&gt;</span> <span class='ident'>PairOfInts</span> {
+  <span class='ident'>PairOfInts</span> { <span class='ident'>first</span>: <span class='ident'>p</span>.<span class='ident'>second</span>, <span class='ident'>second</span>: <span class='ident'>p</span>.<span class='ident'>first</span> }
+}
+</pre>
+<pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Pair</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> { <span class='ident'>first</span>: <span class='ident'>T</span>, <span class='ident'>second</span>: <span class='ident'>T</span> }
+
+<span class='kw'>fn</span> <span class='ident'>swap_pair</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='ident'>p</span>: <span class='ident'>Pair</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Pair</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+  <span class='ident'>Pair</span> { <span class='ident'>first</span>: <span class='ident'>p</span>.<span class='ident'>second</span>, <span class='ident'>second</span>: <span class='ident'>p</span>.<span class='ident'>first</span> }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+  <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>Pair</span> { <span class='ident'>first</span>: <span class='number'>1i</span>, <span class='ident'>second</span>: <span class='number'>2i</span> };
+  <span class='kw'>let</span> <span class='ident'>swapped</span> <span class='op'>=</span> <span class='ident'>swap_pair</span>(<span class='ident'>p</span>);
 }
 </pre>
 
@@ -1034,10 +1055,6 @@ error: aborting due to previous error
     <span class='comment'>// ys == [8i, 16i, 24i]</span>
 </pre>
 
-<h1 id="generics" class='section-header'><a
-                           href="#generics">Generics</a></h1>
-<p>TODO (add to TOC too)</p>
-
 <h1 id="traits" class='section-header'><a
                            href="#traits">Traits</a></h1>
 <ul>
@@ -1167,7 +1184,7 @@ This shape has an area of 6.0</p>
 <p>One restriction:</p>
 
 <blockquote>
-<p>Either the trait or the type you&#39;re writing the <code>impl</code> for must be inside your crate.</p>
+<p>Either the trait or the type you&#39;re writing the <code>impl</code> for must be inside your crate (i.e. your library).</p>
 </blockquote>
 
 <h1 id="a-few-built-in-traits" class='section-header'><a
@@ -1188,7 +1205,7 @@ This shape has an area of 6.0</p>
 <h1 id="enums" class='section-header'><a
                            href="#enums">Enums</a></h1>
 <ul>
-<li>Also called <code>sum types</code> in the litterature.</li>
+<li>Also called <code>sum types</code> in the literature.</li>
 <li>Similar to Haskell&#39;s <code>data</code> and Scala&#39;s <code>case class</code>.</li>
 </ul>
 <pre class='rust '>

@@ -14,7 +14,7 @@ fn main() {
 }
 ```
 
-```
+```norust
 > Hello, world!
 ```
 
@@ -502,6 +502,29 @@ fn main() {
     let area = react.area();
 
     println!("{}", area);
+}
+```
+
+# Generics
+
+```rust
+struct PairOfInts { first: int, second: int }
+
+fn swap_pair(p: PairOfInts) -> PairOfInts {
+  PairOfInts { first: p.second, second: p.first }
+}
+```
+
+```rust
+struct Pair<T> { first: T, second: T }
+
+fn swap_pair<T>(p: Pair<T>) -> Pair<T> {
+  Pair { first: p.second, second: p.first }
+}
+
+fn main() {
+  let p = Pair { first: 1i, second: 2i };
+  let swapped = swap_pair(p);
 }
 ```
 
@@ -1012,10 +1035,6 @@ fn apply(x: int, adder: |int| -> int) -> int {
     // ys == [8i, 16i, 24i]
 ```
 
-# Generics
-
-TODO (add to TOC too)
-
 # Traits
 
 * No inheritance in Rust :)
@@ -1144,7 +1163,7 @@ Implementing traits for primitive types should generally be avoided.
 
 One restriction:
 
-> Either the trait or the type you're writing the `impl` for must be inside your crate.
+> Either the trait or the type you're writing the `impl` for must be inside your crate (i.e. your library).
 
 # A few built-in traits
 
@@ -1164,7 +1183,7 @@ trait Equiv<T> {
 
 # Enums
 
-* Also called `sum types` in the litterature.
+* Also called `sum types` in the literature.
 * Similar to Haskell's `data` and Scala's `case class`.
 
 ```rust
