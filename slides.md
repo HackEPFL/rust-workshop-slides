@@ -47,7 +47,6 @@ fn main() {
 * Type inference
 * Lambdas
 * Closures
-* Structs and methods
 * Iterators
 * Algebraic data types
 * Pattern matching
@@ -64,6 +63,7 @@ fn main() {
 * Control structures
 * Strings
 * Arrays, vectors and slices
+* Structs and methods
 
 # Numeric types
 
@@ -438,6 +438,57 @@ let a = [0i, 1, 2, 3, 4];
 let middle = a.slice(1, 4); // just the elements [1, 2, 3]
 ```
 
+# Structs and methods
+
+# Structs
+
+```rust
+struct Rectangle {
+    width: f32,
+    height: f32
+}
+```
+
+# Static methods
+
+```rust
+struct Rectangle { width: f32, height: f32 }
+
+impl Rectangle {
+    fn new(width: f32, height: f32) -> Rectangle {
+        Rectangle { width: width, height: height }
+    }
+}
+
+fn main() {
+    let rect = Rectangle::new(1.2, 4.9);
+    println!("{}", react.area());
+}
+```
+
+# Member methods
+
+```rust
+struct Rectangle { width: f32, height: f32 }
+
+impl Rectangle {
+    fn area(&self) -> f32 {
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let rect = Rectangle {
+        width: 1.2,
+        height: 4.9
+    };
+    println!("{}", react.area());
+}
+```
+
+# Putting everything together
+
+TODO
 
 # Low-level control
 
@@ -813,54 +864,6 @@ fn apply(x: int, adder: |int| -> int) -> int {
     let ys = xs.map(|x| x * factor);
     
     // ys == [8i, 16i, 24i]
-```
-
-# Structs and methods
-
-# Structs
-
-```rust
-struct Rectangle {
-    width: f32,
-    height: f32
-}
-```
-
-# Static methods
-
-```rust
-struct Rectangle { width: f32, height: f32 }
-
-impl Rectangle {
-    fn new(width: f32, height: f32) -> Rectangle {
-        Rectangle { width: width, height: height }
-    }
-}
-
-fn main() {
-    let rect = Rectangle::new(1.2, 4.9);
-    println!("{}", react.area());
-}
-```
-
-# Member methods
-
-```rust
-struct Rectangle { width: f32, height: f32 }
-
-impl Rectangle {
-    fn area(&self) -> f32 {
-        self.width * self.height   
-    }
-}
-
-fn main() {
-    let rect = Rectangle {
-        width: 1.2,
-        height: 4.9
-    };
-    println!("{}", react.area());
-}
 ```
 
 # Generics
