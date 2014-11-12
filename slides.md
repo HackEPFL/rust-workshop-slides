@@ -890,9 +890,42 @@ fn main() {
 }
 ```
 
-# Borrow field from a structure
+# Return reference to a member of a struct
 
-TODO
+```rust
+struct Point { x: f64, y: f64 }
+
+fn get_x(point: &Point) -> &f64 {
+    &point.x
+}
+```
+
+# Return
+
+Until a few weeks ago, `get_x()` had to be written this way:
+
+```rust
+fn get_x<'a>(point: &'a Point) -> &'a f64 {
+    &point.x
+}
+```
+
+But in that case, those annotations are now optional.
+
+`'a` represents the lifetime of `point`. We hereby specify that the reference we return must have the same lifetime as `point`.
+
+# Return reference to a member of a struct
+
+This means that code such as
+
+```rust
+let mut p = Point { x: 2.0, y: 3.0 };
+let x = get_x(&p);
+
+p = Point { x: 4.0, y: 6.0 };
+```
+
+will not compile, because `x` outlives the value it is reference from.
 
 # Net result
 

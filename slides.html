@@ -914,9 +914,39 @@ error: aborting due to previous error
 }
 </pre>
 
-<h1 id="borrow-field-from-a-structure" class='section-header'><a
-                           href="#borrow-field-from-a-structure">Borrow field from a structure</a></h1>
-<p>TODO</p>
+<h1 id="return-reference-to-a-member-of-a-struct" class='section-header'><a
+                           href="#return-reference-to-a-member-of-a-struct">Return reference to a member of a struct</a></h1><pre class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Point</span> { <span class='ident'>x</span>: <span class='ident'>f64</span>, <span class='ident'>y</span>: <span class='ident'>f64</span> }
+
+<span class='kw'>fn</span> <span class='ident'>get_x</span>(<span class='ident'>point</span>: <span class='kw-2'>&amp;</span><span class='ident'>Point</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>f64</span> {
+    <span class='kw-2'>&amp;</span><span class='ident'>point</span>.<span class='ident'>x</span>
+}
+</pre>
+
+<h1 id="return" class='section-header'><a
+                           href="#return">Return</a></h1>
+<p>Until a few weeks ago, <code>get_x()</code> had to be written this way:</p>
+<pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>get_x</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='ident'>point</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Point</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>f64</span> {
+    <span class='kw-2'>&amp;</span><span class='ident'>point</span>.<span class='ident'>x</span>
+}
+</pre>
+
+<p>But in that case, those annotations are now optional.</p>
+
+<p><code>&#39;a</code> represents the lifetime of <code>point</code>. We hereby specify that the reference we return must have the same lifetime as <code>point</code>.</p>
+
+<h1 id="return-reference-to-a-member-of-a-struct-1" class='section-header'><a
+                           href="#return-reference-to-a-member-of-a-struct-1">Return reference to a member of a struct</a></h1>
+<p>This means that code such as</p>
+<pre class='rust '>
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>Point</span> { <span class='ident'>x</span>: <span class='number'>2.0</span>, <span class='ident'>y</span>: <span class='number'>3.0</span> };
+<span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>get_x</span>(<span class='kw-2'>&amp;</span><span class='ident'>p</span>);
+
+<span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>Point</span> { <span class='ident'>x</span>: <span class='number'>4.0</span>, <span class='ident'>y</span>: <span class='number'>6.0</span> };
+</pre>
+
+<p>will not compile, because <code>x</code> outlives the value it is reference from.</p>
 
 <h1 id="net-result" class='section-header'><a
                            href="#net-result">Net result</a></h1>
