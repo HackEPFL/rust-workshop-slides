@@ -72,35 +72,29 @@ fn main() {
         <th>Name</th>
         <th>Type</th>
         <th>Example</th>
-        <th></th>
     </tr>
     <tr>
         <td>Signed integer</td>
         <td><code>int</code></td>
         <td><code>5i</code></td>
-        <td></td>
     </tr>
     <tr>
         <td>Unsigned integer</td>
         <td><code>uint</code></td>
         <td><code>5u</code></td>
-        <td></td>
     </tr>
     <tr>
         <td>8-bit uint</td>
         <td><code>u8</code></td>
         <td><code>5u8</code></td>
-        <td></td>
     </tr>
     <tr>
         <td>16-bit uint</td>
         <td><code>u16</code></td>
         <td><code>5i</code></td>
-        <td></td>
     </tr>
     <tr>
         <td>etc.</td>
-        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -108,13 +102,11 @@ fn main() {
         <td>32-bit float</td>
         <td><code>f32</code></td>
         <td><code>3.14f32</code></td>
-        <td></td>
     </tr>
     <tr>
         <td>64-bit float</td>
         <td><code>f64</code></td>
         <td><code>3.14_f64</code></td>
-        <td></td>
     </tr>
 </table>
 
@@ -185,7 +177,7 @@ fn main() {
         <td>Unicode string</td>
         <td><code>str</code></td>
         <td><code>"rust is cool"</code></td>
-        <td>array 8-bit unsigned bytes<br>
+        <td>array of 8-bit unsigned bytes<br>
             ~ sequence of UTF-8 codepoints</td>
     </tr>
 </table>
@@ -193,8 +185,10 @@ fn main() {
 # Variable bindings
 
 ```rust
+let x: int = 5;
+
+// type annotations are (usually) optional
 let x = 5i;
-let x: int = 5i;
 
 let mut y = 2i;
 y += 1;
@@ -270,7 +264,11 @@ fn main() {
 }
 ```
 
+> `println!()` is actually a macro, not a function.
+
 # Printing stuff
+
+You can re-order arguments by putting their index inside the braces.
 
 ```rust
 fn main() {
@@ -291,6 +289,8 @@ else {
     println!("Sorry, no beer for you.");
 }
 ```
+
+> No parenthesis around the condition.
 
 # Conditionals
 
@@ -332,7 +332,7 @@ loop {
 }
 ```
 
-Rust's control-flow analysis treats this construct differently than a `while true`, which leads to better generated code.
+> Rust's control-flow analysis treats this construct differently than a `while true`, which leads to better generated code.
 
 # For
 
@@ -350,7 +350,7 @@ for var in expression {
 }
 ```
 
-`expression` must be an `Iterator` (we'll talk about it later).
+> `expression` must be an `Iterator` (we'll talk about it later).
 
 # Strings
 
@@ -369,13 +369,17 @@ let hello = "Hello, world!";
 
 # Growable strings (`String`)
 
+`String` can grow if defined as `mut`able.
+
 ```rust
 let mut hello = "Hello".to_string();
+
 hello.push_str(", world!");
-// hello contains "Hello, world!"
+
+// hello now contains "Hello, world!"
 ```
 
-# Conversions between `&str` and `String`
+# Conversions between the two
 
 * Call `as_slice()` on a `String` to convert it to a `&str`
 * Call `to_string()` on a `&str` to convert it to a `String`
@@ -395,32 +399,41 @@ Converting `String` to `&str` is cheap, converting `&str` to `String` involves a
 
 # Arrays
 
-> An array is a **fixed-sized** list of elements of the same type
+An array is a **fixed-sized** list of elements of the same type.
 
 ```rust
-let a = [1i, 2, 3]; // Only the first item needs a type suffix
+// Only the first item needs a type suffix
+let a = [1i, 2, 3];
+
+// which you can omit if you specify the type
+let a: [int, ..3] = [1, 2, 3];
 
 println!("a has {} elements", a.len());
 println!("the first element of a is {}", a[0]);
 ```
 
-
 # Vectors
 
-> A vector is a **dynamic, growable** array
+A vector is a **dynamic, growable** array
 
 ```rust
 let mut participants = vec!["Bob", "Bill"];
+
 participants.push("Joe");
+
+// participants[2] == "Joe";
 ```
 
 # Slices
 
-> A slice is a reference to an array.
+A slice is a reference to an array.
 
 A slice allows safe and efficient access to a portion of an array without copying.
 
 ```rust
+let a: [int, ..5] = [0, 1, 2, 3, 4];
+let middle: &[int] = a.slice(1, 4); // just the elements [1, 2, 3]
+
 let a = [0i, 1, 2, 3, 4];
 let middle = a.slice(1, 4); // just the elements [1, 2, 3]
 ```
@@ -443,7 +456,10 @@ let middle = a.slice(1, 4); // just the elements [1, 2, 3]
 * No garbage collector
 * No runtime overhead
 * No unpredictable pauses in execution
-* TODO: Stack VS Heap
+
+# Stack vs Heap
+
+TODO
 
 # Guaranteed memory safety
 
