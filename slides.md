@@ -890,7 +890,7 @@ fn main() {
 }
 ```
 
-# Return reference to a member of a struct
+# Lifetime annotations
 
 ```rust
 struct Point { x: f64, y: f64 }
@@ -900,7 +900,7 @@ fn get_x(point: &Point) -> &f64 {
 }
 ```
 
-# Return
+# Lifetime annotations
 
 Until a few weeks ago, `get_x()` had to be written this way:
 
@@ -914,7 +914,7 @@ But in that case, those annotations are now optional.
 
 `'a` represents the lifetime of `point`. We hereby specify that the reference we return must have the same lifetime as `point`.
 
-# Return reference to a member of a struct
+# Lifetime annotations
 
 This means that code such as
 
@@ -926,6 +926,45 @@ p = Point { x: 4.0, y: 6.0 };
 ```
 
 will not compile, because `x` outlives the value it is reference from.
+
+# Lifetime annotations
+
+```rust
+struct Line { start: &Point, end: &Point }
+
+fn make_line(p1: &Point, p2: &Point) -> Line {
+    Line { start: p1, end: p2 }
+}
+
+fn main() {
+    let p1 = Point { x: 1.0, y: 2.3 };
+    let p2 = Point { x: 2.0, y: 5.9 };
+
+    let line = make_line(&p1, &p2);
+}
+```
+
+> error: missing lifetime specifier
+
+# Lifetime annotations
+
+```rust
+struct Line<'a> {
+    start: &'a Point,
+    end: &'a Point
+}
+
+fn make_line<'b>(p1: &'b Point, p2: &'b Point) -> Box<Line<'b>> {
+    box Line { start: p1, end: p2 }
+}
+
+fn main() {
+    let p1 = Point { x: 1.0, y: 2.3 };
+    let p2 = Point { x: 2.0, y: 5.9 };
+
+    let line = make_line(&p1, &p2);
+}
+```
 
 # Net result
 
