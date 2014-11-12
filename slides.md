@@ -912,6 +912,8 @@ fn main() {
 
 # Lifetime annotations
 
+Let's say we want to return a reference to a `struct`'s member field.
+
 ```rust
 struct Point { x: f64, y: f64 }
 

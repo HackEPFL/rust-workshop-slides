@@ -933,7 +933,9 @@ error: aborting due to previous error
 </pre>
 
 <h1 id="lifetime-annotations" class='section-header'><a
-                           href="#lifetime-annotations">Lifetime annotations</a></h1><pre class='rust '>
+                           href="#lifetime-annotations">Lifetime annotations</a></h1>
+<p>Let&#39;s say we want to return a reference to a <code>struct</code>&#39;s member field.</p>
+<pre class='rust '>
 <span class='kw'>struct</span> <span class='ident'>Point</span> { <span class='ident'>x</span>: <span class='ident'>f64</span>, <span class='ident'>y</span>: <span class='ident'>f64</span> }
 
 <span class='kw'>fn</span> <span class='ident'>get_x</span>(<span class='ident'>point</span>: <span class='kw-2'>&amp;</span><span class='ident'>Point</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>f64</span> {
