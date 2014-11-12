@@ -53,7 +53,7 @@
 <li>New experimental, highly parallel browser engine: Servo</li>
 <li>Browsers evolve in a hostile, highly concurrent environment</li>
 <li>Most security problems arise from memory safetey and concurrency issues</li>
-<li>Thus needed a safer, saner systems language, with built-in concurrency</li>
+<li>Thus a safer, saner systems language is needed, with built-in concurrency</li>
 </ul>
 
 <h1 id="why-rust,-for-you?" class='section-header'><a
@@ -61,7 +61,7 @@
 <ul>
 <li>High-level features</li>
 <li>Low-level control</li>
-<li>Powerful Foreign Function Interface</li>
+<li>Powerful Foreign Function Interface (FFI)</li>
 <li>Direct memory control</li>
 <li>Guaranteed memory safety</li>
 <li>Concurrency without data races</li>
@@ -87,7 +87,7 @@
                            href="#but-first,-the-basics">But first, the basics</a></h1>
 <ul>
 <li>Primitive types</li>
-<li>Variables bindings</li>
+<li>Variable bindings</li>
 <li>Functions</li>
 <li>Printing stuff</li>
 <li>Control structures</li>
@@ -220,8 +220,8 @@
     </tr>
 </table>
 
-<h1 id="variables-bindings" class='section-header'><a
-                           href="#variables-bindings">Variables bindings</a></h1><pre class='rust '>
+<h1 id="variable-bindings" class='section-header'><a
+                           href="#variable-bindings">Variable bindings</a></h1><pre class='rust '>
 <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5i</span>;
 <span class='kw'>let</span> <span class='ident'>x</span>: <span class='ident'>int</span> <span class='op'>=</span> <span class='number'>5i</span>;
 
@@ -267,7 +267,7 @@
 
 <h1 id="functions-1" class='section-header'><a
                            href="#functions-1">Functions</a></h1>
-<p>You can omit <code>return</code> if you want return the last expression.</p>
+<p>You can omit <code>return</code> if you want to return the last expression.</p>
 <pre class='rust '>
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
     <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>do_stuff</span>(<span class='number'>2</span>, <span class='number'>3</span>);
@@ -387,7 +387,7 @@ String slices are a &#39;view&#39; into already allocated strings like string li
                            href="#growable-strings-(string)">Growable strings (<code>String</code>)</a></h1><pre class='rust '>
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>hello</span> <span class='op'>=</span> <span class='string'>&quot;Hello&quot;</span>.<span class='ident'>to_string</span>();
 <span class='ident'>hello</span>.<span class='ident'>push_str</span>(<span class='string'>&quot;, world!&quot;</span>);
-<span class='comment'>// s containts &quot;Hello, world!&quot;</span>
+<span class='comment'>// hello contains &quot;Hello, world!&quot;</span>
 </pre>
 
 <h1 id="conversions-between-&amp;str-and-string" class='section-header'><a
@@ -449,7 +449,7 @@ String slices are a &#39;view&#39; into already allocated strings like string li
                            href="#low-level-control">Low-level control</a></h1>
 <ul>
 <li>Ability to trade compiler-enforced safety for lower-level control</li>
-<li>Eg. dereferencing raw pointer, pointer arithmetic, calling extern code</li>
+<li>Eg. dereferencing raw pointer, pointer arithmetic, calling external code</li>
 <li>Such unsafe code must be surrounded by an <code>unsafe</code> block</li>
 <li>Thus easy to spot during code review or when debugging</li>
 </ul>
@@ -610,7 +610,7 @@ error: aborting due to previous error
     <span class='comment'>// `john` moves into show here</span>
     <span class='ident'>show</span>(<span class='ident'>john</span>);
     <span class='comment'>// `john` is deallocated by now</span>
-    <span class='comment'>// the next line thus doesn&#39;t compile</span>
+    <span class='comment'>// so the next line doesn&#39;t compile</span>
     <span class='ident'>show</span>(<span class='ident'>john</span>);
 }
 
@@ -633,7 +633,7 @@ error: aborting due to previous error
     <span class='comment'>// `john` moves into `john_bis` here</span>
     <span class='kw'>let</span> <span class='ident'>john_bis</span> <span class='op'>=</span> <span class='ident'>john</span>;
     
-    <span class='comment'>// the next line thus won&#39;t compile</span>
+    <span class='comment'>// so the next line won&#39;t compile</span>
     <span class='ident'>show</span>(<span class='ident'>john</span>);
 }
 
@@ -648,7 +648,7 @@ error: aborting due to previous error
                            href="#ownership-&amp;-borrowing">Ownership &amp; Borrowing</a></h1>
 <p>When you create a resource, you&#39;re the <strong>owner</strong> of that resource.</p>
 
-<p>Being an owner affords you some privileges:</p>
+<p>Being an owner gives you some privileges:</p>
 
 <ul>
 <li>You control when that resource is deallocated.</li>
@@ -892,7 +892,7 @@ If a type implements a trait, that means that it supports and implements the beh
                            href="#traits-2">Traits</a></h1>
 <p>You can think of them as (better) Java interfaces. They are in fact very similar to Haskell&#39;s typeclasses.</p>
 
-<p>One of the main difference is that you can define a trait implementation separately from the struct definition, even in another module. This means that you can eg. implement a trait you defined yourself for a type provided by a library.</p>
+<p>One of the main differences is that you can define a trait implementation separately from the struct definition, even in another module. This means that you can eg. implement a trait you defined yourself for a type provided by a library.</p>
 
 <p>They&#39;re also much more powerful (but won&#39;t get into too much detail here).</p>
 
@@ -1025,7 +1025,7 @@ This shape has an area of 6.0</p>
 <h1 id="enums" class='section-header'><a
                            href="#enums">Enums</a></h1>
 <ul>
-<li>Also called <code>sum types</code> in the literature.</li>
+<li>Also called <code>sum types</code> in the litterature.</li>
 <li>Similar to Haskell&#39;s <code>data</code> and Scala&#39;s <code>case class</code>.</li>
 </ul>
 <pre class='rust '>
@@ -1089,7 +1089,7 @@ This shape has an area of 6.0</p>
 
 <h1 id="pattern-matching-1" class='section-header'><a
                            href="#pattern-matching-1">Pattern matching</a></h1>
-<p>into this:</p>
+<p>as this:</p>
 <pre class='rust '>
 <span class='kw'>match</span> <span class='ident'>ordering</span> {
     <span class='ident'>Less</span>    <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;less&quot;</span>),
@@ -1272,7 +1272,9 @@ This shape has an area of 6.0</p>
 
 <h1 id="macros" class='section-header'><a
                            href="#macros">Macros</a></h1>
-<p>Available, but won&#39;t be covered today.</p>
+<p>You have already seen them. <code>println!()</code> is a macro. They&#39;re distinguishable by the <code>!</code> at the end of the function name.</p>
+
+<p>We won&#39;t get into too much detail here for lack of time.</p>
 
 <h1 id="modules" class='section-header'><a
                            href="#modules">Modules</a></h1>
