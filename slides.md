@@ -501,7 +501,7 @@ fn main() {
     let rect = Rectangle::new(1.2, 4.9);
     let area = react.area();
 
-    println!("{}", areas);
+    println!("{}", area);
 }
 ```
 
