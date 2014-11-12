@@ -1342,9 +1342,31 @@ You have already seen them. `println!()` is a macro. They're distinguishable by 
 
 We won't get into too much detail here for lack of time.
 
+# Crates and modules
+
+A "crate" in Rust is what you'd call a "package" or "library" in other languages. A crate contains modules (which can contain other modules).
+
+If we have a `greetings` crate that contains a public module `english` that defines a public method `hello()`, we'd use it like this:
+
+```rust
+extern crate greetings;
+
+fn main() {
+  greetings::english::hello();
+}
+```
 # Modules
 
-TODO
+The `use` keyword imports names in the local scope.
+
+```rust
+extern crate greetings;
+use greetings::english;
+
+fn main() {
+  english::hello();
+}
+```
 
 # Cargo
 
@@ -1362,7 +1384,7 @@ Use Cargo for all your projects.
 $ cargo new hello_world --bin
 ```
 
-The `--bin` flag indicates you're making a binary, not a library
+The `--bin` flag indicates you're making a binary, not a library.
 
 This generates a package description file, `Cargo.toml`, where you declare the project's dependencies and metadata.
 

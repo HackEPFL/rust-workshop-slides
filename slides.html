@@ -1370,9 +1370,30 @@ This shape has an area of 6.0</p>
 
 <p>We won&#39;t get into too much detail here for lack of time.</p>
 
+<h1 id="crates-and-modules" class='section-header'><a
+                           href="#crates-and-modules">Crates and modules</a></h1>
+<p>A &quot;crate&quot; in Rust is what you&#39;d call a &quot;package&quot; or &quot;library&quot; in other languages. A crate contains modules (which can contain other modules).</p>
+
+<p>If we have a <code>greetings</code> crate that contains a public module <code>english</code> that defines a public method <code>hello()</code>, we&#39;d use it like this:</p>
+<pre class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>greetings</span>;
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+  <span class='ident'>greetings</span>::<span class='ident'>english</span>::<span class='ident'>hello</span>();
+}
+</pre>
+
 <h1 id="modules" class='section-header'><a
                            href="#modules">Modules</a></h1>
-<p>TODO</p>
+<p>The <code>use</code> keyword imports names in the local scope.</p>
+<pre class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>greetings</span>;
+<span class='kw'>use</span> <span class='ident'>greetings</span>::<span class='ident'>english</span>;
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+  <span class='ident'>english</span>::<span class='ident'>hello</span>();
+}
+</pre>
 
 <h1 id="cargo" class='section-header'><a
                            href="#cargo">Cargo</a></h1>
@@ -1391,7 +1412,7 @@ This shape has an area of 6.0</p>
 $ <span class='ident'>cargo</span> <span class='ident'>new</span> <span class='ident'>hello_world</span> <span class='op'>-</span><span class='op'>-</span><span class='ident'>bin</span>
 </pre>
 
-<p>The <code>--bin</code> flag indicates you&#39;re making a binary, not a library</p>
+<p>The <code>--bin</code> flag indicates you&#39;re making a binary, not a library.</p>
 
 <p>This generates a package description file, <code>Cargo.toml</code>, where you declare the project&#39;s dependencies and metadata.</p>
 <pre class='rust '>
