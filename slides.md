@@ -1,6 +1,6 @@
 % Rust Workshop
 
-Rust meetup + Hackers at EPFL
+Rust Romandie meetup + Hackers at EPFL
 
 Dimiter Petrov & Romain Ruetschi
 
