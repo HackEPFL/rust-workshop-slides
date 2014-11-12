@@ -1274,7 +1274,50 @@ TODO
 
 # Cargo
 
-TODO
+Cargo is Rust's package manager. It:
+
+* gets and compiles external dependencies
+* builds your projects
+* runs your tests
+
+Use Cargo for all your projects.
+
+# Starting a project
+
+```
+$ cargo new hello_world --bin
+```
+
+The `--bin` flag indicates you're making a binary, not a library
+
+This generates a package description file, `Cargo.toml`, where you declare the project's dependencies and metadata.
+
+```
+[package]
+
+name = "hello_world"
+version = "0.0.1"
+authors = ["Your Name <you@example.com>"]
+```
+
+# Compiling your project
+
+`src/main.rs`:
+
+```rust
+fn main() {
+    println!("Hello, world!")
+}
+```
+
+`cargo build` to build or `cargo run` to build and run your project
+
+```norust
+$ cargo run
+   Compiling hello_world v0.0.1 (file:///path/to/hello_world)
+     Running `target/hello_world`
+Hello, world!
+```
 
 # Thank you!
 

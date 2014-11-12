@@ -1282,7 +1282,48 @@ This shape has an area of 6.0</p>
 
 <h1 id="cargo" class='section-header'><a
                            href="#cargo">Cargo</a></h1>
-<p>TODO</p>
+<p>Cargo is Rust&#39;s package manager. It:</p>
+
+<ul>
+<li>gets and compiles external dependencies</li>
+<li>builds your projects</li>
+<li>runs your tests</li>
+</ul>
+
+<p>Use Cargo for all your projects.</p>
+
+<h1 id="starting-a-project" class='section-header'><a
+                           href="#starting-a-project">Starting a project</a></h1><pre class='rust '>
+$ <span class='ident'>cargo</span> <span class='ident'>new</span> <span class='ident'>hello_world</span> <span class='op'>-</span><span class='op'>-</span><span class='ident'>bin</span>
+</pre>
+
+<p>The <code>--bin</code> flag indicates you&#39;re making a binary, not a library</p>
+
+<p>This generates a package description file, <code>Cargo.toml</code>, where you declare the project&#39;s dependencies and metadata.</p>
+<pre class='rust '>
+[<span class='ident'>package</span>]
+
+<span class='ident'>name</span> <span class='op'>=</span> <span class='string'>&quot;hello_world&quot;</span>
+<span class='ident'>version</span> <span class='op'>=</span> <span class='string'>&quot;0.0.1&quot;</span>
+<span class='ident'>authors</span> <span class='op'>=</span> [<span class='string'>&quot;Your Name &lt;you@example.com&gt;&quot;</span>]
+</pre>
+
+<h1 id="compiling-your-project" class='section-header'><a
+                           href="#compiling-your-project">Compiling your project</a></h1>
+<p><code>src/main.rs</code>:</p>
+<pre class='rust '>
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Hello, world!&quot;</span>)
+}
+</pre>
+
+<p><code>cargo build</code> to build or <code>cargo run</code> to build and run your project</p>
+
+<pre><code class="language-norust">$ cargo run
+   Compiling hello_world v0.0.1 (file:///path/to/hello_world)
+     Running `target/hello_world`
+Hello, world!
+</code></pre>
 
 <h1 id="thank-you!" class='section-header'><a
                            href="#thank-you!">Thank you!</a></h1>
