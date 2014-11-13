@@ -29,7 +29,9 @@
 <p>November 12, 2014</p>
 
 <h1 id="hello,-rust" class='section-header'><a
-                           href="#hello,-rust">Hello, Rust</a></h1><pre class='rust '>
+                           href="#hello,-rust">Hello, Rust</a></h1>
+<p>Rust is a fairly new systems programming language focused on safety and speed.</p>
+<pre class='rust '>
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Hello, world!&quot;</span>);
 }
@@ -80,6 +82,31 @@
 <li>Traits (= type classes)</li>
 <li>Macros</li>
 <li>Modules</li>
+</ul>
+
+<h1 id="low-level-control" class='section-header'><a
+                           href="#low-level-control">Low-level control</a></h1>
+<ul>
+<li>Ability to trade compiler-enforced safety for lower-level control</li>
+<li>Eg. dereferencing raw pointer, pointer arithmetic, calling external code</li>
+<li>Such unsafe code must be surrounded by an <code>unsafe</code> block</li>
+<li>Thus easy to spot during code review or when debugging</li>
+</ul>
+
+<h1 id="powerful-ffi" class='section-header'><a
+                           href="#powerful-ffi">Powerful FFI</a></h1>
+<ul>
+<li>Call Rust code from other languages (C, C++, or even GCed languages like Ruby)</li>
+<li>Create bindings for libraries exposing a C interface</li>
+</ul>
+
+<h1 id="direct-memory-control" class='section-header'><a
+                           href="#direct-memory-control">Direct memory control</a></h1>
+<ul>
+<li>No garbage collector</li>
+<li>No runtime overhead</li>
+<li>No unpredictable pauses in execution</li>
+<li>Stack and heap allocations</li>
 </ul>
 
 <h1 id="but-first,-the-basics" class='section-header'><a
@@ -543,31 +570,6 @@ String slices are a &#39;view&#39; into already allocated strings like string li
   <span class='kw'>let</span> <span class='ident'>swapped</span> <span class='op'>=</span> <span class='ident'>swap_pair</span>(<span class='ident'>p</span>);
 }
 </pre>
-
-<h1 id="low-level-control" class='section-header'><a
-                           href="#low-level-control">Low-level control</a></h1>
-<ul>
-<li>Ability to trade compiler-enforced safety for lower-level control</li>
-<li>Eg. dereferencing raw pointer, pointer arithmetic, calling external code</li>
-<li>Such unsafe code must be surrounded by an <code>unsafe</code> block</li>
-<li>Thus easy to spot during code review or when debugging</li>
-</ul>
-
-<h1 id="powerful-ffi" class='section-header'><a
-                           href="#powerful-ffi">Powerful FFI</a></h1>
-<ul>
-<li>Call Rust code from other languages (C, C++, or even GCed languages like Ruby)</li>
-<li>Create bindings for libraries exposing a C interface</li>
-</ul>
-
-<h1 id="direct-memory-control" class='section-header'><a
-                           href="#direct-memory-control">Direct memory control</a></h1>
-<ul>
-<li>No garbage collector</li>
-<li>No runtime overhead</li>
-<li>No unpredictable pauses in execution</li>
-<li>Stack and heap allocations</li>
-</ul>
 
 <h1 id="stack-and-heap-allocations" class='section-header'><a
                            href="#stack-and-heap-allocations">Stack and heap allocations</a></h1>

@@ -8,6 +8,8 @@ November 12, 2014
 
 # Hello, Rust
 
+Rust is a fairly new systems programming language focused on safety and speed.
+
 ```rust
 fn main() {
     println!("Hello, world!");
@@ -53,6 +55,25 @@ fn main() {
 * Traits (= type classes)
 * Macros
 * Modules
+
+# Low-level control
+
+* Ability to trade compiler-enforced safety for lower-level control
+* Eg. dereferencing raw pointer, pointer arithmetic, calling external code
+* Such unsafe code must be surrounded by an `unsafe` block
+* Thus easy to spot during code review or when debugging
+
+# Powerful FFI
+
+* Call Rust code from other languages (C, C++, or even GCed languages like Ruby)
+* Create bindings for libraries exposing a C interface
+
+# Direct memory control
+
+* No garbage collector
+* No runtime overhead
+* No unpredictable pauses in execution
+* Stack and heap allocations
 
 # But first, the basics
 
@@ -527,25 +548,6 @@ fn main() {
   let swapped = swap_pair(p);
 }
 ```
-
-# Low-level control
-
-* Ability to trade compiler-enforced safety for lower-level control
-* Eg. dereferencing raw pointer, pointer arithmetic, calling external code
-* Such unsafe code must be surrounded by an `unsafe` block
-* Thus easy to spot during code review or when debugging
-
-# Powerful FFI
-
-* Call Rust code from other languages (C, C++, or even GCed languages like Ruby)
-* Create bindings for libraries exposing a C interface
-
-# Direct memory control
-
-* No garbage collector
-* No runtime overhead
-* No unpredictable pauses in execution
-* Stack and heap allocations
 
 # Stack and heap allocations
 
