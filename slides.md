@@ -1438,11 +1438,11 @@ It is possible to turn an `Iterator` into a collection with the `collect` method
 let a = [1i, 2, 3, 4, 5];
 let iter = a.iter().map(|&x| x + 1);
 
-let a_plus_one: Vec<int> = a.collect();
+let a_plus_one: Vec<int> = iter.collect();
 // a_plus_one = [2i, 3, 4, 5, 6];
 ```
 
-The type annotation is mandatory. `let a_plus_one = a.collect();` would throw an error.
+The type annotation is mandatory. `let a_plus_one = iter.collect();` would throw an error.
 
 # Macros
 
